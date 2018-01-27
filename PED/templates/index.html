@@ -8,6 +8,19 @@
     <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/index.css">
        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+   <script>
+
+/*    $(document).ready(function() {
+		$("#new_bt").click(function(){	
+
+			doSomething();
+			
+    });
+		});
+    */
+   </script>
     
 </head>
 
@@ -30,9 +43,10 @@
         
         </div>
         <img src="" id="image_box" align="middle">
-        
+		<button type="button" id="new_bt" onClick="doSomething();">Change Content</button>
     </div>
 </body>
+
     <script type="text/javascript" src="/static/index.js"></script>
 	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
     {{ script | safe }}

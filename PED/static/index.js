@@ -45,6 +45,82 @@ function loadDoc() {
 	     document.getElementById("showing_for").innerHTML = this.responseText;
 	    }
 	  };
-	  xhttp.open("POST", "/sprint_summary/", true);
+	  xhttp.open("POST", "/media/", true);
 	  xhttp.send();
 	}
+
+ 
+ 
+
+function doSomething() {
+	console.log("asdfasdf");
+	
+    $.ajax(
+    	    {
+    	        type:"POST",
+    	        url: "/media/",
+     	        success: function( data ) 
+    	        {
+    	            
+    	            $( '#showing_for' ).html(data);
+    	        }
+    	     })
+}
+
+
+
+function doPOST() {
+	console.log("asdfasdf");
+	
+    $.ajax(
+    	    {
+    	        type:"POST",
+    	        url: "/media/",
+    	        data:{
+	                 post_id: 'catid'
+	        },
+	       
+     	        success: function( data ) 
+    	        {
+    	            
+    	            $( '#showing_for' ).html(data);
+    	        }
+    	     })
+}
+
+
+
+
+
+
+// CSRF code
+function getCookie(name) {
+    var cookieValue = null;
+    var i = 0;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (i; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    crossDomain: false, // obviates need for sameOrigin test
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type)) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+}); 

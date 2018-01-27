@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 
 from .forms import srint_select_form
 from .reports import InteractiveGraph
+from django.http.response import HttpResponse
 # Create your views here.
 
 
@@ -40,7 +41,11 @@ def Fetch_Sprint(request):
         form = srint_select_form()
 
     return render(request, 'about.html', {'form': form})
-
+ 
+ 
 def Ajax_Test(request):
-    if request.method=='POST':
-        return render(request,"hey this is Ajax")
+        if request.method == 'GET':
+               
+               return HttpResponse("Successful GET request!") # Sending an success response
+        elif request.method=='POST':
+               return HttpResponse("Successful POST request!")

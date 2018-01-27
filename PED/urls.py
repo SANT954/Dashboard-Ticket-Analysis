@@ -8,6 +8,6 @@ from django.conf.urls.static import static
 urlpatterns = [
         url(r'^$', views.PED_summary.as_view()),
 		url(r'^sprint_summary/$', views.Fetch_Sprint),
-		url(r'^media/$', views.Fetch_Sprint),
+		url(r'^media/$', views.Ajax_Test),
 		
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
