@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SPM Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/static/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    
+</head>
+
+<body>
+    <div class="container">
+        <h2 id="dashboard">Production Engineering Dashboard</h2>
+        
+        <div id="sel_id">
+
+         <select class="select"  id ="sel_sprint" onchange="clearReports(this)" >
+         <option selected>Select Sprint</option>
+         <option>17.12</option>
+         <option>18.2</option>
+         </select>
+        </div>
+        
+        <div id="buttons">
+            <button id="bug_report" value="Bug Report" onclick="generateReport(this)" class="button button1" >Bug Report</button>
+            <button id="ticket_report" value="Ticket Report" onclick="generateReport(this)" class="button button2" >Ticket Report</button>
+        </div>
+
+
+
+        <p  id="showing_for" ></p>
+
+        <img src="" id="image_box" align="middle"> 
+        <!--img src="" id ="imgbox"-->
+         
+    </div>
+</body>
+
+</html>

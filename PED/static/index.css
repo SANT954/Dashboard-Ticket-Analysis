@@ -1,0 +1,70 @@
+body {
+    background-color: white;
+}
+
+.container {
+    width: 80%;
+    heiht: 100%;
+    background: #EEE;
+    margin: auto;
+    padding: 10px;
+    position:relative;
+}
+
+#dashboard {
+    text-align: center;
+    margin: 1px;
+}
+
+.sel_show{
+	display: inline-block;
+}
+
+#id_Select_Sprint {
+ background-color: #ccccff;
+    /* Green */
+    border: none;
+    color: black;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 10px 300px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+
+   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
+#showing_for {
+    color: #ff0066;
+
+}
+
+.button {
+    background-color: #ccccff;
+    /* Green */
+    border: none;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 10px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+}
+
+
+.button1 {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button2 {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SPM Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+       <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
+    
+</head>
+
+<body>
+    <div class="container">
+        <h2 id="dashboard">Production Engineering Dashboard</h2>
+        <form action="/sprint_summary/" method="POST">{% csrf_token %} {{form}}
+        	
+            <div id="buttons">
+                <input  id="bug_report" type='submit' value ="Bug Report" name="Bug Report"  class="button button1" />
+            <input id="ticket_report" type='submit' value= "Ticket Report" name="Ticket Report"  class="button button2" />
+            </div>
+        </form>
+             {{ div | safe }}
+        
+        <p id="showing_for">asdf</p>
+        <img src="" id="image_box" align="middle">
+        
+    </div>
+</body>
+    <script type="text/javascript" src="/static/index.js"></script>
+	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
+    {{ script | safe }}
+	
+</html>
