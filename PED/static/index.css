@@ -3,6 +3,9 @@ body {
 }
 
 .container {
+	  display: flex;
+  flex-direction: column;
+	
     width: 80%;
     heiht: 100%;
     background: #EEE;
@@ -20,9 +23,9 @@ body {
 	display: inline-block;
 }
 
-#id_Select_Sprint {
+#id_select_Sprint {
  background-color: #ccccff;
-    /* Green */
+	
     border: none;
     color: black;
     padding: 8px;
@@ -67,4 +70,9 @@ body {
 
 .button2 {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.bk-canvas-events{
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	
 }

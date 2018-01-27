@@ -40,3 +40,7 @@ def Fetch_Sprint(request):
         form = srint_select_form()
 
     return render(request, 'about.html', {'form': form})
+
+def Ajax_Test(request):
+    if request.method=='POST':
+        return render(request,"hey this is Ajax")
