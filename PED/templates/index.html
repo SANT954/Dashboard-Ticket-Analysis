@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/index.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.css">
+    
+    
        
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
    <script>
 
@@ -29,26 +31,33 @@
         <h2 id="dashboard">Production Engineering Dashboard</h2>
                 
         
-        <form action="/sprint_summary/" method="POST">{% csrf_token %} {{form}}
-        	
-            <div id="buttons">
-                <input  id="bug_report" type='submit' value ="Bug Report" name="Bug Report"  class="button button1" onClick="showing_ForText(this)"/>
-            <input id="ticket_report" type='submit' value= "Ticket Report" name="Ticket Report"  class="button button2" onClick="showing_ForText(this)"/>
-        
-            </div>
-        </form>
+       <!-- <form action="/sprint_summary_post_form/" method="POST">{% csrf_token %} {{form}} -->
+
+		<div id="buttons">
+			<button id="bug_report" type='button' value="Bug Report"
+				name="Bug Report" class="button button1" onClick="doPOSTForm(this)">Bug_Report</button>
+			<button id="ticket_report" type='button' value="Ticket Report"
+				name="Ticket Report" class="button button2"
+				onClick="doPOSTForm(this)">Ticket_Report</button>
+
+		</div>
+		<!-- </form> -->
         <div><p id="showing_for"></p></div>
-        <div id="bokeh_id">
+    
+    <div id="bokeh_graph" >
              {{ div | safe }}
-        
         </div>
+    {{ script | safe}}
         <img src="" id="image_box" align="middle">
 		<button type="button" id="new_bt" onClick="doSomething();">Change Content</button>
     </div>
 </body>
-
+<script type="text/javascript" src="/static/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/static/index.js"></script>
+
 	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
-    {{ script | safe }}
+
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.js"></script>
+    
 	
 </html>

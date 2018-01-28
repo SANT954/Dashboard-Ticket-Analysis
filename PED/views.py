@@ -1,10 +1,11 @@
 from django.shortcuts import   render
+from django.template.loader import get_template
 
 from django.views.generic import TemplateView
 
 from .forms import srint_select_form
 from .reports import InteractiveGraph
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 # Create your views here.
 
 
@@ -42,6 +43,32 @@ def Fetch_Sprint(request):
 
     return render(request, 'about.html', {'form': form})
  
+
+def POSTForm(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        
+        #report_type': ['Ticket Report'
+        x = request.POST.get('report_type')
+        if x=='Ticket Report':
+            script, div = InteractiveGraph().genTicketReport()
+        elif x=='Bug Report':
+            script, div = InteractiveGraph().genTicketReport()
+            
+            # process the data in form.cleaned_data as required
+            # ...HttpResponseRedirect('/' +data+'/')
+            # redirect to a new URL:'/PED_summary/',
+
+            # render(request, 'index.html', {'form': form,'asdf':data})
+            
+#         t = get_template('index.html')
+#         html = t.render({'script': script,'div':div})
+#         return HttpResponse(html)    
+#         
+       # return render(request, 'index.html', {'script': script,'div':div})
+        return JsonResponse({"script": script, "div": div})
+
  
 def Ajax_Test(request):
         if request.method == 'GET':
