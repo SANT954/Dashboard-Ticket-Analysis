@@ -60,6 +60,59 @@ function doSomething() {
 	})
 }
 
+
+
+/* 
+$(function fillData() {
+    $('#table').bootstrapTable({
+        data: data
+    });
+ */
+	
+/*	
+function fillData() {
+	console.log("asdfasdf");
+
+	$.ajax({
+		type : "POST",
+		url : "/pull_data/",
+		data : {
+			id_select_Sprint : $('#id_select_Sprint').val(),
+			pulldata : 'Yes'
+		},
+
+		success : function(data) {
+		      $('#table').bootstrapTable({
+        data: data
+
+		}
+	})
+}
+}*/
+
+function fillData() {
+	console.log("asdfasdf");
+
+	$.ajax({
+		type : "POST",
+		url : "/pull_data/",
+		data : {
+			id_select_Sprint : $('#id_select_Sprint').val(),
+			pulldata : 'Yes'
+		},
+
+		success : function(data) {
+			console.log("asdfasdf");
+
+			$('#table').bootstrapTable({
+		          data: [data] })
+ 			 
+		}
+	})
+}
+
+
+
 function doPOST() {
 	console.log("asdfasdf");
 

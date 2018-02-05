@@ -8,6 +8,7 @@
     
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
    
     <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/index.css">
@@ -49,6 +50,14 @@
 				name="Ticket Report" class="button button2"
 				onClick="doPOSTForm(this)">Ticket_Report</button>
 
+			<button id="fill_Data" type='button' value="Fill Data"
+				name="Fill Data" class="button button2"
+				onClick="fillData()">Fill_Data</button>
+
+					
+				
+				 
+				
 		</div>
 		<!-- </form> -->
         <div><p id="showing_for"></p></div>
@@ -57,12 +66,27 @@
              {{ div | safe }}
         </div>
     {{ script | safe}}
+	
+	 
+	<table id="table" class="table table-bordered">
+    <thead>
+    <tr>
+        <th data-field="name">Name</th>
+        <th data-field="stargazers_count">Stars</th>
+        <th data-field="forks_count">Forks</th>
+        <th data-field="description">Description</th>
+    </tr>
+    </thead>
+</table>
+ 	</div>
 </body>
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    
 
 
 	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
