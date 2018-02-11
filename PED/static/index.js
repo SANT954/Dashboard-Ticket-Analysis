@@ -113,6 +113,116 @@ function fillData() {
 
 
 
+function pie_data() {
+	console.log("asdfasdf");
+
+    document.getElementById("container3").style.display='none';
+    document.getElementById("container4").style.display='none';
+
+    document.getElementById("container1").style.display='block';
+    document.getElementById("container2").style.display='block';
+	$.ajax({
+		type : "POST",
+		url : "/pie_data/",
+		data : {
+			id_select_Sprint : $('#id_select_Sprint').val(),
+			pie_data : 'Yes'
+		},
+
+		success : function(data) {
+			
+			console.log(data["pie_dat"])
+			console.log(data.pie_dat['Incident'])
+ 			console.log(data["pie_dat"]['Service Request'])
+			console.log(data["pie_dat"]['Incident'])
+			pie=data.pie_dat;
+			var  dat=[];
+			for(i in pie ){
+				dat.push({"name":i,"y":pie[i]});
+			}
+			draw_pie(dat,'container1');
+			draw_pie(dat,'container2');
+		}
+	})
+}
+
+
+function line_data() {
+	console.log("asdfasdf");
+    document.getElementById("container1").style.display='none';
+    document.getElementById("container2").style.display='none';
+    document.getElementById("container3").style.display='block';
+    document.getElementById("container4").style.display='block';
+
+	$.ajax({
+		type : "POST",
+		url : "/line_data/",
+		data : {
+			id_select_Sprint : $('#id_select_Sprint').val(),
+			line_data : 'Yes'
+		},
+
+		success : function(data) {
+			/*
+			console.log(data["line_dat"])
+			console.log(data.pie_dat['Incident'])
+ 			console.log(data["line_dat"]['Service Request'])
+			console.log(data["line_dat"]['Incident'])*/
+			line=data.line_dat;
+			var  dat=[];
+			for(var i in line){
+				
+				date_=parseISOLocal(line[i][0])
+					dat.push({"name": date_,"y":line[i][1]});
+				
+				
+			//	dat.push({"name":Date.parse(line[i][0]),"y":line[i][1]});
+			}
+			draw_line(line,'container3');
+			draw_line(line,'container4');
+		}
+	})
+}
+
+function parseISOLocal(s) {
+	  var b = s.split('-');
+	  //datestring=String(parseInt(b[0])+1) + b[1] +b[2]
+	  datestring=b[0] + b[1] +b[2]
+	  return new Date(datestring);
+	}
+
+
+function bokeh_pie(){ 
+
+	document.getElementById('bokeh_ch1').innerHTML=""; 
+	document.getElementById('bokeh_ch2').innerHTML=""; 
+
+	var plt =  Bokeh.Plotting;
+ 
+	
+	var inc_sr={labels:['asdf','Sr'],
+		values: [53,65]
+		
+	};
+	
+	
+	 var p0 = Bokeh.Charts.pie(inc_sr,{palette:['#FF8C00'	,'#A0522D'],
+        inner_radius: 0.0,
+        start_angle: Math.PI / 2,
+        end_angle: 5 * Math.PI / 2
+    });
+    
+	 p0.document.getElementById('bk-root')
+	 
+	 
+    document.getElementById('bokeh_ch1').innerHTML=plt.show(p0);
+    document.getElementById('bokeh_ch2').innerHTML=plt.show(p0);
+	
+	
+	
+	}
+
+
 function doPOST() {
 	console.log("asdfasdf");
 
@@ -148,7 +258,11 @@ function doPOSTForm(e) {
  
 			
 			//var bokeh_data = JSON.parse(data);
-		      $('#bokeh_graph').html(data.div);
+		      $('#bokeh_graph1').html(data.div1);
+		      $('#bokeh_graph2').html(data.div2);
+		      $('#bokeh_graph3').html(data.div2);
+		      $("head").append(data.script);
+		      $("head").append(data.script);
 		      $("head").append(data.script);
 
 			

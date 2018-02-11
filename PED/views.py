@@ -6,9 +6,10 @@ from django.views.generic import TemplateView
 from .forms import srint_select_form
 from .reports import InteractiveGraph
 from django.http.response import HttpResponse, JsonResponse
+from PED import data_layer
+from cx_Oracle import Connection as con
 # Create your views here.
-
-
+ 
 class PED_summary(TemplateView):
 
     def get(self, request, **kwargs):
@@ -46,6 +47,7 @@ def Fetch_Sprint(request):
 
     return render(request, 'about.html', {'form': form})
  
+        
 
 def POSTForm(request):
     # if this is a POST request we need to process the form data
@@ -70,7 +72,7 @@ def POSTForm(request):
 #         return HttpResponse(html)    
 #         
        # return render(request, 'index.html', {'script': script,'div':div})
-        return JsonResponse({"script": script, "div": div})
+        return JsonResponse({"script": script, "div1": div,"div2": div,"div3": div})
 
 		
  
@@ -89,3 +91,54 @@ def Ajax_Test(request):
                return HttpResponse("Successful GET request!") # Sending an success response
         elif request.method=='POST':
                return HttpResponse("Successful POST request!")
+           
+           
+
+def pie_data(request):
+ 
+    
+    
+    if request.method == 'POST':
+        x = request.POST.get('pie_data')
+        if x=='Yes':
+            x
+            con=data_layer.getConnection()
+            cur = con.cursor()
+            cur.execute(data_layer.incident_sr_count)
+            dic ={}
+            
+            for result in cur:
+                dic.update({result[0]:result[1]})
+              
+            
+            
+            return JsonResponse({ "pie_dat": dic})
+        
+           
+           
+           
+           
+ 
+def line_data(request):
+ 
+    
+    
+    if request.method == 'POST':
+        x = request.POST.get('line_data')
+        if x=='Yes':
+            try:
+                    
+                con=data_layer.getConnection()
+                cur = con.cursor()
+                cur.execute(data_layer.incident_sr_outflow)
+                
+                recs = cur.fetchall()
+    
+      
+                  
+            except:
+                print("error occured")
+            
+            return JsonResponse({ "line_dat": recs})
+        
+                     

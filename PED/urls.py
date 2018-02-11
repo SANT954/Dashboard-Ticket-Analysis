@@ -10,6 +10,9 @@ urlpatterns = [
 		url(r'^sprint_summary/$', views.Fetch_Sprint),
         url(r'^sprint_summary_post_form/$', views.POSTForm),
 		url(r'^pull_data/$', views.DataPull),
+        url(r'^pie_data/$', views.pie_data),
+        url(r'^line_data/$', views.line_data),
 		url(r'^media/$', views.Ajax_Test),
+         
 		
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

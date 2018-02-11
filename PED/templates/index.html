@@ -2,22 +2,26 @@
 <html lang="en">
 
 <head>
-    <title>SPM Dashboard</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
-   
-    <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/static/index.css">
-    <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.css">
-    
-    
-       
-    
-   <script>
+<title>SPM Dashboard</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+ 
+<link rel="stylesheet" type="text/css" href="/static/index.css">
+
+
+
+<script>
 
 /*    $(document).ready(function() {
 		$("#new_bt").click(function(){	
@@ -28,20 +32,22 @@
 		});
     */
    </script>
-    
+
 </head>
 
 <body id="bootstrap-overrides">
-    <div class="container">
-        <h2 id="dashboard">Production Engineering Dashboard</h2>
-                
-     
- 
-<select  data-live-search="true" data-live-search-style="startsWith" class="selectpicker sel_id">
-<option selcted= "selected">Select Sprint</option>
-<option >17.12</option>
-<option >18.2</option>    </select>   
-       <!-- <form action="/sprint_summary_post_form/" method="POST">{% csrf_token %} {{form}} -->
+	<div class="container">
+		<h2 id="dashboard">Production Engineering Dashboard</h2>
+
+
+
+		<select data-live-search="true" data-live-search-style="startsWith"
+			class="selectpicker sel_id">
+			<option selcted="selected">Select Sprint</option>
+			<option>17.12</option>
+			<option>18.2</option>
+		</select>
+		<!-- <form action="/sprint_summary_post_form/" method="POST">{% csrf_token %} {{form}} -->
 
 		<div id="buttons">
 			<button id="bug_report" type='button' value="Bug Report"
@@ -51,48 +57,69 @@
 				onClick="doPOSTForm(this)">Ticket_Report</button>
 
 			<button id="fill_Data" type='button' value="Fill Data"
-				name="Fill Data" class="button button2"
-				onClick="fillData()">Fill_Data</button>
+				name="Fill Data" class="button button2" onClick="fillData()">Fill_Data</button>
 
-					
-				
-				 
-				
+			<button id="pie_data" type='button' value="pie_data"
+				name="pie_data" class="button button2" onClick="pie_data()">pie_data</button>
+
+	<button id="line_data" type='button' value="line_data"
+				name="line_data" class="button button2" onClick="line_data()">line_data</button>
+
+	<button id="bokeh_pie" type='button' value="bokeh_pie"
+				name="bokeh_pie" class="button button2" onClick="bokeh_pie()">bokeh_pie</button>
+
+
+
+
+
+<div id="container1" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+<div id="container2" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+
+<div id="container3" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+<div id="container4" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+
 		</div>
 		<!-- </form> -->
-        <div><p id="showing_for"></p></div>
-    
-    <div id="bokeh_graph" >
-             {{ div | safe }}
-        </div>
-    {{ script | safe}}
-	
-	 
+		<div>
+			<p id="showing_for"></p>
+		</div>
+
+ 
+<
+ 
+
+
+
+ 
+
+ 
+
 	<table id="table" class="table table-bordered">
-    <thead>
-    <tr>
-        <th data-field="name">Name</th>
-        <th data-field="stargazers_count">Stars</th>
-        <th data-field="forks_count">Forks</th>
-        <th data-field="description">Description</th>
-    </tr>
-    </thead>
-</table>
- 	</div>
+		<thead>
+			<tr>
+				<th data-field="name">Name</th>
+				<th data-field="stargazers_count">Stars</th>
+				<th data-field="forks_count">Forks</th>
+				<th data-field="description">Description</th>
+			</tr>
+		</thead>
+	</table>
+
+ 
 </body>
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-    
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 
+<script type="text/javascript" src="/static/g_chart.js"></script>
+ 
+<script type="text/javascript" src="/static/index.js"></script>
 
-	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
-
-    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.js"></script>
- 	
-    <script type="text/javascript" src="/static/index.js"></script>
-	
 </html>
