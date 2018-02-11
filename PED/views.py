@@ -1,6 +1,7 @@
+import datetime
 from django.shortcuts import   render
 from django.template.loader import get_template
-
+import pandas as pd
 from django.views.generic import TemplateView
 
 from .forms import srint_select_form
@@ -102,8 +103,8 @@ def pie_data(request):
         x = request.POST.get('pie_data')
         if x=='Yes':
             x
-            con=data_layer.getConnection()
-            cur = con.cursor()
+            cur=data_layer.getConnectionCursor()
+             
             cur.execute(data_layer.incident_sr_count)
             dic ={}
             
@@ -119,26 +120,106 @@ def pie_data(request):
            
            
  
-def line_data(request):
+def Incident_VS_SR(request):
  
     
     
     if request.method == 'POST':
-        x = request.POST.get('line_data')
+        x = request.POST.get('Incident_VS_SR')
         if x=='Yes':
             try:
-                    
-                con=data_layer.getConnection()
-                cur = con.cursor()
-                cur.execute(data_layer.incident_sr_outflow)
+                     
+                cur=data_layer.getConnectionCursor()
                 
-                recs = cur.fetchall()
-    
-      
+                '''Daily inflow ''' 
+                cur.execute(data_layer.daily_ticket_inflow)
+                daily_ticket_inflow = cur.fetchall()
+                
+                '''Daily outflow'''
+                cur.execute(data_layer.daily_ticket_outflow)
+                daily_ticket_outflow= cur.fetchall()
+                
+                '''Weekly inflow''' 
+                cur.execute(data_layer.weekly_ticket_inflow)
+                weekly_ticket_inflow= cur.fetchall()
+                
+                '''Weekly outflow'''
+                cur.execute(data_layer.weekly_ticket_outflow)
+                weekly_ticket_outflow= cur.fetchall()
+                
                   
             except:
                 print("error occured")
             
-            return JsonResponse({ "line_dat": recs})
+            return JsonResponse({ "daily_ticket_inflow": daily_ticket_inflow,"daily_ticket_outflow": daily_ticket_outflow,
+                                  "weekly_ticket_inflow": weekly_ticket_inflow,"weekly_ticket_outflow": weekly_ticket_outflow
+                                 
+                                 })
         
+    
+def InflowVSOutflow(request):
+ 
+    
+    
+    if request.method == 'POST':
+        x = request.POST.get('InflowVSOutflow')
+        if x=='Yes':
+            try:
                      
+                cur=data_layer.getConnectionCursor()
+                
+                '''Daily inflow ''' 
+                cur.execute(data_layer.daily_ticket_inflow)
+                daily_tick_inflow = cur.fetchall()
+                
+                daily_ticket_inflow=make_consistent(daily_tick_inflow)
+                subset = daily_ticket_inflow[['Created','Incident_Count','SR_Count']]
+                tuples_inflow = [tuple(x) for x in subset.values] 
+
+                
+                #daily_ticket_inflow['Created','Incident_Count','SR_Count']
+                '''Daily outflow'''
+                cur.execute(data_layer.daily_ticket_outflow)
+                daily_tick_outflow= cur.fetchall()
+                
+                daily_ticket_outflow=make_consistent(daily_tick_outflow)
+                #daily_ticket_outflow['Created','Incident_Count','SR_Count']
+                subset_outflow = daily_ticket_inflow[['Created','Incident_Count','SR_Count']]
+                tuples_outflow = [tuple(x) for x in subset_outflow.values]
+                
+                '''Weekly inflow''' 
+                cur.execute(data_layer.weekly_ticket_inflow)
+                weekly_ticket_inflow= cur.fetchall()
+                
+                '''Weekly outflow'''
+                cur.execute(data_layer.weekly_ticket_outflow)
+                weekly_ticket_outflow= cur.fetchall()
+                
+                  
+            except Exception as e:
+                print(e)
+            
+            return JsonResponse({ "daily_ticket_inflow":daily_tick_inflow,"daily_ticket_outflow":daily_tick_outflow,
+                                  "weekly_ticket_inflow": weekly_ticket_inflow,"weekly_ticket_outflow": weekly_ticket_outflow
+                                 
+                                 })
+        
+
+
+def make_consistent(daily_ticket_inflow ):
+    daily_ticket_inflow_df=pd.DataFrame(daily_ticket_inflow,columns=['Created','Incident_Count','SR_Count'])
+    print(daily_ticket_inflow_df.head(1))
+    print(daily_ticket_inflow_df.dtypes)
+    now = datetime.datetime.now()
+    sysdate=now.strftime("%Y%m%d")
+    daily_ticket_inflow_df['Created'] = pd.to_datetime(daily_ticket_inflow_df['Created'])
+    print(daily_ticket_inflow_df.dtypes)
+    dates_df=pd.DataFrame({'Created':pd.date_range('20170324', sysdate)}) 
+    print(dates_df.head(1))
+    #dates_df.loc['Incident_Count']=daily_ticket_inflow.['Incident_Count'] 
+    #new_df=pd.merge(dates_df,daily_ticket_inflow_df,how='left',on='Created')
+    return pd.merge(dates_df, daily_ticket_inflow_df, on='Created', how='outer')
+
+
+    #new_df.to_csv(r"D:\PE report\new.csv")
+    

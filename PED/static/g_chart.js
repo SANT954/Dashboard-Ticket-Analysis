@@ -33,12 +33,12 @@ Highcharts.chart(e, {
 
     
     
-    function draw_line(line,e){
+    function Incident_VS_SR(line,title,e){
     	var  incident_data=[];
 		for(var i in line){
 			
-			date_=parseISOLocal(line[i][0])
-				incident_data.push({"name": date_,"y":line[i][1]});
+			incident_date=parseISOLocal(line[i][0])
+				incident_data.push([Date.parse(line[i][0]),line[i][1]]);
 			
 			
 		//	dat.push({"name":Date.parse(line[i][0]),"y":line[i][1]});
@@ -46,8 +46,8 @@ Highcharts.chart(e, {
 		var sr_data=[]
 for(var i in line){
 			
-			date_=parseISOLocal(line[i][0])
-				sr_data.push({"name": date_,"y":line[i][2]});
+			sr_date=parseISOLocal(line[i][0])
+				sr_data.push([Date.parse(line[i][0]),line[i][2]]);
 			
 			
 		//	dat.push({"name":Date.parse(line[i][0]),"y":line[i][1]});
@@ -65,15 +65,17 @@ for(var i in line){
              zoomType: 'x'
          },
          title: {
-             text: 'Incident and SR inflow Graph'
+             text:  title
          },
          subtitle: {
              text: document.ontouchstart === undefined ?
                      'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
          },
          xAxis: {
-             type: 'datetime'
-         },
+        	 type: 'datetime',
+        	    labels: {
+        	      format: '{value:%Y-%b-%e}'
+        	    }},
          yAxis: {
              title: {
                  text: 'Inflow Count'
@@ -81,21 +83,112 @@ for(var i in line){
          },
          legend: {
              enabled: false
-         },
-        xAxis: {
-                type: 'datetime'
-            },
-
+         }, 
         //var object={'positive':94,'neutral':2,'negative':2};
 
     	 
         series: [{
-                name: 'Incident',
+                name: "Incident",
                 data: incident_data
         }
            ,{
-                name: 'SR',
+                name: "SR",
                 data: sr_data
         }]
         
         })};
+        
+        
+        
+        
+        function InflowVSOutflow(ticket_inflow,ticket_outflow,title,category,e){
+        	
+        	if (category=='Incident'){
+        		category_index	=1
+        	}else{
+        		category_index=2
+        	}
+        	/*var  inflow_data=[];
+    		for(var i in ticket_inflow){
+    			
+    			inflow_date=parseISOLocal(ticket_inflow[i][0])
+    				inflow_data.push({"name": inflow_date,"y":ticket_inflow[i][category_index]});
+    			
+    			
+    		//	dat.push({"name":Date.parse(line[i][0]),"y":line[i][1]});
+    		}
+    		
+    		
+    		
+    		
+    		
+*/    		var  inflow_data=[];
+for(var i in ticket_inflow){
+    			 
+    				inflow_data.push([Date.parse(ticket_inflow[i][0]),ticket_inflow[i][category_index]]);
+    			
+    			
+    		//	dat.push({"name":Date.parse(line[i][0]),"y":line[i][1]});
+    		}
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	var outflow_data=[]
+    for(var i in ticket_outflow){
+    			
+    			//outflow_date=parseISOLocal(ticket_outflow[i][0])
+    				outflow_data.push([Date.parse(ticket_outflow[i][0]),ticket_outflow[i][category_index]]);
+    			
+    			
+    		//	dat.push({"name":Date.parse(line[i][0]),"y":line[i][1]});
+    		}
+        	
+        	
+        Highcharts.chart(e, {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+             },
+            
+
+             chart: {
+                 zoomType: 'x'
+             },
+             title: {
+                 text:  title
+             },
+             subtitle: {
+                 text: document.ontouchstart === undefined ?
+                         'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+             },
+             xAxis: {
+            	 type: 'datetime',
+            	    labels: {
+            	      format: '{value:%Y-%b-%e}'
+            	    }},
+             yAxis: {
+                 title: {
+                     text: 'Inflow Count'
+                 }
+             },
+             legend: {
+                 enabled: false
+             }, 
+                    	 
+            series: [{
+                    name: 'Incident',
+                    data: inflow_data
+            },
+            {
+                name: 'Incident',
+                data: outflow_data
+        }
+               ]
+            
+            })};
+        

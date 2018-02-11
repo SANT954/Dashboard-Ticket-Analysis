@@ -11,7 +11,9 @@ urlpatterns = [
         url(r'^sprint_summary_post_form/$', views.POSTForm),
 		url(r'^pull_data/$', views.DataPull),
         url(r'^pie_data/$', views.pie_data),
-        url(r'^line_data/$', views.line_data),
+        url(r'^InflowVSOutflow/$', views.InflowVSOutflow),
+        url(r'^Incident_VS_SR/$', views.Incident_VS_SR),
+        
 		url(r'^media/$', views.Ajax_Test),
          
 		

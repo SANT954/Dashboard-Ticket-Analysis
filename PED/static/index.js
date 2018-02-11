@@ -114,14 +114,17 @@ function fillData() {
 
 
 function pie_data() {
-	console.log("asdfasdf");
-
-    document.getElementById("container3").style.display='none';
-    document.getElementById("container4").style.display='none';
-
+ 
     document.getElementById("container1").style.display='block';
     document.getElementById("container2").style.display='block';
-	$.ajax({
+    document.getElementById("container3").style.display='none';
+    document.getElementById("container4").style.display='none';
+    document.getElementById("container5").style.display='none';
+    document.getElementById("container6").style.display='none';
+
+    
+    
+    $.ajax({
 		type : "POST",
 		url : "/pie_data/",
 		data : {
@@ -147,39 +150,59 @@ function pie_data() {
 }
 
 
-function line_data() {
-	console.log("asdfasdf");
+function Draw_InflowVSOutflow() {
+	 
     document.getElementById("container1").style.display='none';
     document.getElementById("container2").style.display='none';
     document.getElementById("container3").style.display='block';
     document.getElementById("container4").style.display='block';
-
+    document.getElementById("container5").style.display='none';
+    document.getElementById("container6").style.display='none';
+    
+    
 	$.ajax({
 		type : "POST",
-		url : "/line_data/",
+		url : "/InflowVSOutflow/",
 		data : {
 			id_select_Sprint : $('#id_select_Sprint').val(),
-			line_data : 'Yes'
+			InflowVSOutflow : 'Yes'
 		},
 
 		success : function(data) {
-			/*
-			console.log(data["line_dat"])
-			console.log(data.pie_dat['Incident'])
- 			console.log(data["line_dat"]['Service Request'])
-			console.log(data["line_dat"]['Incident'])*/
-			line=data.line_dat;
-			var  dat=[];
-			for(var i in line){
-				
-				date_=parseISOLocal(line[i][0])
-					dat.push({"name": date_,"y":line[i][1]});
-				
-				
-			//	dat.push({"name":Date.parse(line[i][0]),"y":line[i][1]});
-			}
-			draw_line(line,'container3');
-			draw_line(line,'container4');
+			 console.log('asdf')
+			 
+			InflowVSOutflow(data.daily_ticket_inflow,data.daily_ticket_outflow,'Daily '+'Incident'+' Inflow vs Outflow','Incident','container3');
+
+			 InflowVSOutflow(data.daily_ticket_inflow,data.daily_ticket_outflow,'Daily '+'SR'+' Inflow vs Outflow','SR','container4');
+		}
+	})
+}
+
+function Draw_Incident_VS_SR() {
+	 
+    document.getElementById("container1").style.display='none';
+    document.getElementById("container2").style.display='none';
+    document.getElementById("container3").style.display='block';
+    document.getElementById("container4").style.display='block';
+    document.getElementById("container5").style.display='block';
+    document.getElementById("container6").style.display='block';
+    
+    
+	$.ajax({
+		type : "POST",
+		url : "/Incident_VS_SR/",
+		data : {
+			id_select_Sprint : $('#id_select_Sprint').val(),
+			Incident_VS_SR: 'Yes'
+		},
+
+		success : function(data) {
+		 
+			Incident_VS_SR(data.daily_ticket_inflow,'Daily Ticket Inflow','container3');
+			Incident_VS_SR(data.daily_ticket_outflow,'Daily Ticket Outflow','container4');
+			Incident_VS_SR(data.weekly_ticket_inflow,'Weekly Ticket Inflow','container5');
+			Incident_VS_SR(data.weekly_ticket_outflow,'Weekly Ticket Outflow','container6');
+		
 		}
 	})
 }

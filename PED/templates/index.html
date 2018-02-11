@@ -15,6 +15,7 @@
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
 
  
 <link rel="stylesheet" type="text/css" href="/static/index.css">
@@ -62,21 +63,74 @@
 			<button id="pie_data" type='button' value="pie_data"
 				name="pie_data" class="button button2" onClick="pie_data()">pie_data</button>
 
-	<button id="line_data" type='button' value="line_data"
-				name="line_data" class="button button2" onClick="line_data()">line_data</button>
+	<button id="InflowVSOutflow" type='button' value="InflowVSOutflow"
+				name="InflowVSOutflow" class="button button2" onClick="Draw_InflowVSOutflow()">InflowVSOutflow</button>
+
+
+	<button id="Incident_VS_SR" type='button' value="line_data"
+				name="Incident_VS_SR" class="button button2" onClick="Draw_Incident_VS_SR()">Incident_VS_SR</button>
 
 	<button id="bokeh_pie" type='button' value="bokeh_pie"
-				name="bokeh_pie" class="button button2" onClick="bokeh_pie()">bokeh_pie</button>
+				name="bokeh_pie" class="button button2" onClick="InflowVSOutflow1('container')">bokeh_pie</button>
 
 
+<!-- 
+<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
-
-
+ -->
 <div id="container1" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
 <div id="container2" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
 
 <div id="container3" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
 <div id="container4" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+
+
+<div id="container5" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+<div id="container6" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+
+
+<script>
+
+          	
+    		
+    		data=[[151794180000,80],
+[151802820000,65],
+[151811460000,62],
+[151820100000,3]]
+    		 
+        	
+        	
+        	
+function InflowVSOutflow1(e){        	 
+        Highcharts.chart(e, {
+           /* chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+             },
+            */
+             
+             xAxis: {
+                 type: 'datetime',
+                 labels: {
+                     formatter: function () {
+            
+                         return Highcharts.dateFormat('%m/%d', this.value);
+                     }
+                 },
+              },
+
+             
+         	 
+            series: [{
+                    name: 'Incident',
+                    data: data
+            }
+               ]
+            
+            })};
+        
+</script>
 
 		</div>
 		<!-- </form> -->
