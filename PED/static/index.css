@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-	  display: flex;
+/* 	  display: flex;
   flex-direction: column;
 	
     width: 80%;
@@ -13,7 +13,7 @@ body {
 	;
     margin: auto;
     padding: 10px;
-    position:relative;
+    position:relative; */
     bottom:0px;
     margin: 0px auto;
     padding: 10px;
@@ -83,7 +83,15 @@ body {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
+ 
+/* .col-lg-4{
+margin-top: 5px;    margin-bottom: 5px;
+} */
+  
+#ticket_table_length{
+	
+}  
+  
 .bk-plot-wrapper table {
     margin: 0 auto;
 }
