@@ -70,7 +70,15 @@
 				name="Incident_VS_SR" class="button button2" onClick="Draw_Incident_VS_SR()">Incident_VS_SR</button>
 
 		<button id="fill_Data" type='button' value="Fill Data"
+				name="Fill Data" class="button button2" onClick="loadAnimation()">Sync Latest Data</button>
+
+<button id="load_confirm" type='button' value="load_confirm"
+				name="load_confirm" class="button button2" onClick="loadConfirm()" style="display:none">Click to Confirm</button>
+
+
+<!-- <button id="fill_Data" type='button' value="Fill Data"
 				name="Fill Data" class="button button2" onClick="getLatestData()">Sync Latest Data</button>
+ -->
 
 
 	<!-- <button id="bokeh_pie" type='button' value="bokeh_pie"
@@ -82,9 +90,14 @@
 
  -->
  
+  
+<div id="loader_id" class="nothing"></div>
+ 
  <div>
-			<p id="Sync_Job_Status"></p>
-		</div>
+ 
+ <h2 id="Sync_Job_Status"></h2>
+ 
+ 		</div>
  
 <div class = "row" > 
  <div class="col-lg-4" id="pie_container1" ></div>

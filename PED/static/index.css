@@ -91,9 +91,32 @@ margin-top: 5px;    margin-bottom: 5px;
 #ticket_table_length{
 	
 }  
-  
-.bk-plot-wrapper table {
-    margin: 0 auto;
+ 
+ .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
 }
-.bk-root { height: auto;
-width: auto; }
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+#load_confirm{
+	margin-left: 200px;
+
+}

@@ -1,3 +1,34 @@
+function loadAnimation(){
+	 
+	
+	
+//        $("#load_confirm").show();
+	document.getElementById("load_confirm").style.display = 'block';
+  
+	
+	$("#load_confirm").click(function(){
+		$('#loader_id').addClass('loader').removeClass('nothing')
+
+		var sync_status=getLatestData()
+		var delayInMilliseconds = 1000; //1 second
+
+setTimeout(function() {
+  
+	$('#loader_id').addClass('nothing').removeClass('loader')
+	
+	$('#Sync_Job_Status').html("Latest Data Sync Completed in " + sync_status);
+
+}, delayInMilliseconds);
+
+		
+		
+    });
+    
+	
+
+}
+
+
 function clearReports(e) {
 
 	document.getElementById('image_box').src = "";
@@ -78,22 +109,28 @@ function doSomething() {
 
 function getLatestData() {
 	console.log("asdfasdf");
-
+	var status;
 	$.ajax({
 		type : "POST",
 		url : "/pullLatestData/",
 		data : {
 			id_select_Sprint : $('#id_select_Sprint').val(),
 			pulldata : 'Yes'
+				
 		},
+	    async: false, 
 
 		success : function(data) {
 			console.log("asdfasdf");
 			disableAllElements()
-			$('#Sync_Job_Status').html(data.sync_job_status);
  
+			status=data.sync_job_status
+			
+			
 		}
 	})
+	
+	return status
 }
 
 function disableAllElements() {
