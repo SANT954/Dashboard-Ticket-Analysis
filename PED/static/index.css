@@ -6,6 +6,7 @@ body {
 .container {
 /* 	  display: flex;
   flex-direction: column;
+    display:block;
 	
     width: 80%;
     heiht: 100%;
@@ -68,6 +69,7 @@ body {
     display: inline-block;
     font-size: 16px;
     margin: 10px 10px;
+    margin-left:30px;
     cursor: pointer;
     -webkit-transition-duration: 0.4s;
     /* Safari */
@@ -112,11 +114,7 @@ margin-top: 5px;    margin-bottom: 5px;
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-</style>
-</head>
-<body>
-
+ 
 #load_confirm{
 	margin-left: 200px;
-
 }

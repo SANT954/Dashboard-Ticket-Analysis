@@ -57,7 +57,7 @@ def Fetch_Sprint(request):
 def POSTForm(request):
     # if this is a POST request we need to process the form data
     if request.method == 'GET':
-        return JsonResponse({"script": "script"})
+        return JsonResponse({"script": "Ticket Details Will Appear Here"})
         # create a form instance and populate it with data from the request:
         
         # report_type': ['Ticket Report'
@@ -82,7 +82,7 @@ def pullLatestData(request):
     current_date="''"
         
     try:
-        cur.execute(data_layer.truncate_table)
+        
         url='https://oihap.oraclecorp.com/osbcommon/TicketingService/TicketingRest/reports?id=103784&system=oal%20osvc'
         response = requests.get(url)
         response.encoding = 'utf-8'
@@ -93,6 +93,7 @@ def pullLatestData(request):
         data=jsonData[0].get('rows')
         dat=data
         print(len(dat))
+        cur.execute(data_layer.truncate_table)
         for rec in dat:
             '''name = item.get("rows")
             campaignID = item.get("lookupName")

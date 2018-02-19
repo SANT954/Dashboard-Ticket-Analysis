@@ -16,25 +16,12 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
+<script
+	src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
 
-
- 
 <link rel="stylesheet" type="text/css" href="/static/index.css">
 
 
-
-<script>
-
-/*    $(document).ready(function() {
-		$("#new_bt").click(function(){	
-
-			doSomething();
-			
-    });
-		});
-    */
-   </script>
 
 </head>
 
@@ -53,164 +40,124 @@
 		<!-- <form action="/sprint_summary_post_form/" method="POST">{% csrf_token %} {{form}} -->
 
 		<div id="buttons">
-<!-- 			<button id="bug_report" type='button' value="Bug Report"
-				name="Bug Report" class="button button1" onClick="doPOSTForm(this)">Bug_Report</button>
- -->			<button id="ticket_report" type='button' value="Ticket Report"
+
+			<button id="ticket_report"  type='button' value="Ticket Report"
 				name="Ticket Report" class="button button2"
 				onClick="getTicketData()">Ticket_Report</button>
 
-			<button id="pie_data" type='button' value="pie_data"
-				name="pie_data" class="button button2" onClick="pie_data()">Summay Charts</button>
+			<button id="pie_data" type='button' value="pie_data" name="pie_data"
+				class="button button2" onClick="pie_data()">Summay Charts</button>
 
-	<button id="InflowVSOutflow" type='button' value="InflowVSOutflow"
-				name="InflowVSOutflow" class="button button2" onClick="Draw_InflowVSOutflow()">InflowVSOutflow</button>
-
-
-	<button id="Incident_VS_SR" type='button' value="line_data"
-				name="Incident_VS_SR" class="button button2" onClick="Draw_Incident_VS_SR()">Incident_VS_SR</button>
-
-		<button id="fill_Data" type='button' value="Fill Data"
-				name="Fill Data" class="button button2" onClick="loadAnimation()">Sync Latest Data</button>
-
-<button id="load_confirm" type='button' value="load_confirm"
-				name="load_confirm" class="button button2" onClick="loadConfirm()" style="display:none">Click to Confirm</button>
+			<button id="InflowVSOutflow" type='button' value="InflowVSOutflow"
+				name="InflowVSOutflow" class="button button2"
+				onClick="Draw_InflowVSOutflow()">InflowVSOutflow</button>
 
 
-<!-- <button id="fill_Data" type='button' value="Fill Data"
-				name="Fill Data" class="button button2" onClick="getLatestData()">Sync Latest Data</button>
- -->
+			<button id="Incident_VS_SR" type='button' value="line_data"
+				name="Incident_VS_SR" class="button button2"
+				onClick="Draw_Incident_VS_SR()">Incident_VS_SR</button>
+
+			<button id="fill_Data" type='button' value="Fill Data"
+				name="Fill Data" class="button button2" onClick="loadAnimation()">Sync
+				Latest Data</button>
 
 
-	<!-- <button id="bokeh_pie" type='button' value="bokeh_pie"
-				name="bokeh_pie" class="button button2" onClick="InflowVSOutflow1('container')">bokeh_pie</button>
- -->
 
-<!-- 
-<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+		
 
- -->
- 
-  
-<div id="loader_id" class="nothing"></div>
- 
- <div>
- 
- <h2 id="Sync_Job_Status"></h2>
- 
- 		</div>
- 
-<div class = "row" > 
- <div class="col-lg-4" id="pie_container1" ></div>
- 
- <div class="col-lg-4" id="pie_container2"  ></div>
- <div class="col-lg-4" id="pie_container3" ></div>
- 
- <div class="col-lg-4" id="pie_container4"  ></div>
- <div class="col-lg-4" id="pie_container5" ></div>
- 
- <div class="col-lg-4" id="pie_container6"  ></div>
- <div class="col-lg-4" id="pie_container7" ></div>
- 
- <div class="col-lg-4" id="pie_container8"  ></div>
- 
- <div class="col-lg-4" id="pie_container9" ></div>
- 
- <div class="col-lg-4" id="pie_container10"  ></div>
- <div class="col-lg-4" id="pie_container11" ></div>
- 
- <div class="col-lg-4" id="pie_container12"  ></div>
- 
- </div>
- 
-<div id="container1" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
-<div id="container2" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+<div id="load_confirm" class="row" style="display: none">
 
-<div id="container3" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
-<div id="container4" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+			<button  type='button' value="load_confirm"
+				name="load_confirm" class="button button2" style=" margin-left: 400px;" onClick="loadConfirm()"
+				>Click to Confirm</button>
 
 
-<div id="container5" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
-<div id="container6" style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px "></div>
+</div>
+
+		<div id="loader_id"  style=" margin: 50px 400px 400px 400px; class="nothing"></div>
+
+		<div>
+
+			<h2 class="text-center" id="Sync_Job_Status"></h2>
+
+		</div>
+
+		<div class="row">
+			<div class="col-lg-4" id="pie_container1"></div>
+
+			<div class="col-lg-4" id="pie_container2"></div>
+			<div class="col-lg-4" id="pie_container3"></div>
+
+			<div class="col-lg-4" id="pie_container4"></div>
+			<div class="col-lg-4" id="pie_container5"></div>
+
+			<div class="col-lg-4" id="pie_container6"></div>
+			<div class="col-lg-4" id="pie_container7"></div>
+
+			<div class="col-lg-4" id="pie_container8"></div>
+
+			<div class="col-lg-4" id="pie_container9"></div>
+
+			<div class="col-lg-4" id="pie_container10"></div>
+			<div class="col-lg-4" id="pie_container11"></div>
+
+			<div class="col-lg-4" id="pie_container12"></div>
+
+		</div>
+
+		<div id="container1"
+			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
+		<div id="container2"
+			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
+
+		<div id="container3"
+			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
+		<div id="container4"
+			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
 
 
- 		</div>
-		<!-- </form> -->
+		<div id="container5"
+			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
+		<div id="container6"
+			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
+
+
+
 		<div>
 			<p id="showing_for"></p>
 		</div>
 
-  
- 
-<div id="table-container" >
+</div>
 
-<table id="ticket_table" class="table table-striped table-bordered"  width="100%"></table>
- </div>
+		<div id="table-container">
 
-<!-- 	<table id="ticket_table" class="table table-bordered">
-		<thead>
-			<tr>
+			<table id="ticket_table" class="table table-striped table-bordered"
+				width="100%"></table>
+		</div>
+	</div>
 
- <th data-field="TICKET">TICKET</th>
-<th data-field="CATEGORY">CATEGORY</th>
-<th data-field="DISPOSITION">DISPOSITION</th>
-<th data-field="CONTROL_NUMBER">CONTROL_NUMBER</th>
-<th data-field="BUG_NUMBER">BUG_NUMBER</th>
-<th data-field="STATUS">STATUS</th>
-<th data-field="CREATED">CREATED</th>
-<th data-field="ASSIGNED">ASSIGNED</th>
- 
-			</tr>
-		</thead>
-	</table>
- -->
-
- <!-- 
-
-	<table id="table" class="table table-bordered">
-		<thead>
-			<tr>
-				<th data-field="name">Name</th>
-				<th data-field="stargazers_count">Stars</th>
-				<th data-field="forks_count">Forks</th>
-				<th data-field="description">Description</th>
-			</tr>
-		</thead>
-	</table>
-
- --> 
 </body>
 
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-	 
+
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-
-	<script
+<script
 	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script
+<script
 	src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-	
-	<script
+<script
 	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"></script>
-	
-	<script
+<script
 	src="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"></script>
-
-	
-	
-	
-<script type="text/javascript" src="/static/g_chart.js"></script>
-
- 
 <script type="text/javascript" src="/static/index.js"></script>
-
-
+<script type="text/javascript" src="/static/g_chart.js"></script>
 
 </html>

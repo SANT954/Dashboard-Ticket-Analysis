@@ -1,33 +1,29 @@
 function loadAnimation(){
-	 
-	
+
+	disableAllElements()	
 	
 //        $("#load_confirm").show();
 	document.getElementById("load_confirm").style.display = 'block';
-  
+	$('#Sync_Job_Status').html("")
 	
-	$("#load_confirm").click(function(){
-		$('#loader_id').addClass('loader').removeClass('nothing')
-
-		var sync_status=getLatestData()
-		var delayInMilliseconds = 1000; //1 second
-
-setTimeout(function() {
-  
-	$('#loader_id').addClass('nothing').removeClass('loader')
-	
-	$('#Sync_Job_Status').html("Latest Data Sync Completed in " + sync_status);
-
-}, delayInMilliseconds);
-
-		
-		
-    });
+	//$("#load_confirm").click(function(){});
     
 	
 
 }
 
+
+function loadConfirm(){
+	$('#Sync_Job_Status').html("")
+	document.getElementById("loader_id").style.display = 'block';
+	$('#loader_id').addClass('loader').removeClass('nothing')
+
+	var sync_status=getLatestData(mycallback);
+	$('#loader_id').addClass('loader').removeClass('nothing')
+	
+	
+
+}
 
 function clearReports(e) {
 
@@ -105,11 +101,27 @@ function doSomething() {
  */
 
 
- 
+ function mycallback(response){
+	 console.log(response)
+		var delayInMilliseconds =2000; //1 second
 
-function getLatestData() {
+	 setTimeout(function() {
+
+	 $('#loader_id').addClass('nothing').removeClass('loader')
+
+	 $('#Sync_Job_Status').html("Latest Data Sync Completed in " + response.sync_job_status);
+
+	 }, delayInMilliseconds);
+
+
+ }
+
+function getLatestData(callback) {
 	console.log("asdfasdf");
-	var status;
+	var sync_status;
+	
+	
+
 	$.ajax({
 		type : "POST",
 		url : "/pullLatestData/",
@@ -118,20 +130,21 @@ function getLatestData() {
 			pulldata : 'Yes'
 				
 		},
-	    async: false, 
+	    //async: false, 
 
-		success : function(data) {
-			console.log("asdfasdf");
-			disableAllElements()
- 
-			status=data.sync_job_status
-			
-			
-		}
+		success: mycallback
+		
 	})
-	
-	return status
+	}
+
+function handleData(data /* , textStatus, jqXHR */ ) {
+    alert(data);
+  console.log(data)
 }
+
+
+
+ 
 
 function disableAllElements() {
 	document.getElementById("container1").style.display = 'none';
@@ -147,6 +160,10 @@ function disableAllElements() {
 	document.getElementById("pie_container5").style.display = 'none';
 	document.getElementById("pie_container6").style.display = 'none';
 	document.getElementById("table-container").style.display = 'none';
+
+	document.getElementById("loader_id").style.display = 'none';
+	document.getElementById("load_confirm").style.display = 'none';
+	$('#Sync_Job_Status').html("")
 }
 
 
@@ -208,6 +225,7 @@ function getTicketData() {
 				        "delay": 0,
 				        "track": true,
 				        "fade": 250
+				        
 				    } );
 				
 			});
@@ -225,7 +243,10 @@ function onhover(){
 		var thText = $(this).text();
 		var hoverTxt;
 		$.ajax({
-		url : "/sprint_summary_post_form",
+			type : "GET",
+			//http://jsfiddle.net/0g2axdt5/ refer to this for hover
+			url:"/sprint_summary_post_form",
+			//url : "https://oihap.oraclecorp.com/osbcommon/TicketingService/TicketingRest/tickets?lookupName=170324-000888&system=oal%20osvc",
 		async : false,
 		success : function(respText) {
 		hoverTxt = respText;
@@ -441,7 +462,7 @@ function Draw_Incident_VS_SR() {
 	document.getElementById("container5").style.display = 'block';
 	document.getElementById("container6").style.display = 'block';
 
-	Disable_elements();
+	
 
 	$.ajax({
 		type : "POST",
