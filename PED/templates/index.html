@@ -13,11 +13,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script
-	src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 
 <link rel="stylesheet" type="text/css" href="/static/index.css">
 
@@ -29,52 +26,52 @@
 	<div class="container">
 		<h2 id="dashboard">Production Engineering Dashboard</h2>
 
-
-
+ 	 <!-- 
 		<select data-live-search="true" data-live-search-style="startsWith"
-			class="selectpicker sel_id">
+			class="selectpicker sel_id" >
 			<option selcted="selected">Select Sprint</option>
 			<option>17.12</option>
 			<option>18.2</option>
-		</select>
+		</select> -->
 		<!-- <form action="/sprint_summary_post_form/" method="POST">{% csrf_token %} {{form}} -->
+ 
+ 
+		<div id="buttons" class="row">
 
-		<div id="buttons">
-
-			<button id="ticket_report"  type='button' value="Ticket Report"
-				name="Ticket Report" class="button button2"
+			<button id="ticket_report"  class="col-lg-2 button button2"   type='button' value="Ticket Report"
+				name="Ticket Report" class=""
 				onClick="getTicketData()">Ticket_Report</button>
 
-			<button id="pie_data" type='button' value="pie_data" name="pie_data"
-				class="button button2" onClick="pie_data()">Summay Charts</button>
+			<button id="pie_data" class="col-lg-2 button button2"  type='button' value="pie_data" name="pie_data"
+			 onClick="pie_data()">Summay Charts</button>
 
-			<button id="InflowVSOutflow" type='button' value="InflowVSOutflow"
-				name="InflowVSOutflow" class="button button2"
+			<button id="InflowVSOutflow"  class="col-lg-2 button button2" type='button' value="InflowVSOutflow"
+				name="InflowVSOutflow"  
 				onClick="Draw_InflowVSOutflow()">InflowVSOutflow</button>
 
 
-			<button id="Incident_VS_SR" type='button' value="line_data"
-				name="Incident_VS_SR" class="button button2"
+			<button id="Incident_VS_SR"  class="col-lg-2 button button2" type='button' value="line_data"
+				name="Incident_VS_SR"  
 				onClick="Draw_Incident_VS_SR()">Incident_VS_SR</button>
 
-			<button id="fill_Data" type='button' value="Fill Data"
-				name="Fill Data" class="button button2" onClick="loadAnimation()">Sync
+			<button id="fill_Data"  class="col-lg-2 button button2" type='button' value="Fill Data"
+				name="Fill Data"   onClick="loadConfirmSync()">Sync
 				Latest Data</button>
-
-
-
-		
-
-<div id="load_confirm" class="row" style="display: none">
-
-			<button  type='button' value="load_confirm"
-				name="load_confirm" class="button button2" style=" margin-left: 400px;" onClick="loadConfirm()"
-				>Click to Confirm</button>
-
 
 </div>
 
-		<div id="loader_id"  style=" margin: 50px 400px 400px 400px; class="nothing"></div>
+		
+
+ <div id="load_confirm" class="row" style="display: none"> 
+
+  
+			<button  type='button' value="load_confirm"
+				name="load_confirm" class="button button2"  onClick="loadConfirm()"  style="  margin text-align: center;position: absolute; padding=40px"
+				>Confirm To Sync</button>
+
+ </div> 
+
+		<div id="loader_id"  style=" margin: 50px 400px 40px 400px"; class="nothing"></div>
 
 		<div>
 
@@ -127,11 +124,11 @@
 			<p id="showing_for"></p>
 		</div>
 
-</div>
+ 
 
 		<div id="table-container">
 
-			<table id="ticket_table" class="table table-striped table-bordered"
+			<table id="ticket_table" class="table table-striped table-bordered" 
 				width="100%"></table>
 		</div>
 	</div>
@@ -157,7 +154,16 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"></script>
 <script
 	src="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"></script>
-<script type="text/javascript" src="/static/index.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
 <script type="text/javascript" src="/static/g_chart.js"></script>
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
+
+<script type="text/javascript" src="/static/index.js"></script>
 </html>

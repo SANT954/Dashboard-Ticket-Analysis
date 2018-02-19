@@ -3,9 +3,10 @@ function loadAnimation(){
 	disableAllElements()	
 	
 //        $("#load_confirm").show();
-	document.getElementById("load_confirm").style.display = 'block';
+//	document.getElementById("load_confirm").style.display = 'block';
 	$('#Sync_Job_Status').html("")
 	
+	loadConfirm()
 	//$("#load_confirm").click(function(){});
     
 	
@@ -144,7 +145,28 @@ function handleData(data /* , textStatus, jqXHR */ ) {
 
 
 
- 
+function loadConfirmSync() {
+	$.confirm({
+	    title: 'Confirm to Sync Data?',
+	    content: '',
+	    buttons: {
+	        confirm: function () {
+	          //  $.alert('Confirmed!');
+	            loadAnimation();
+	        },
+	        cancel: function () {
+	            $.alert('Canceled!');
+	        }/*,
+	        somethingElse: {
+	            text: 'Something else',
+	            btnClass: 'btn-blue',
+	            keys: ['enter', 'shift'],
+	            action: function(){
+	                $.alert('Something else?');
+	            }*/
+	        }
+	    })
+	};
 
 function disableAllElements() {
 	document.getElementById("container1").style.display = 'none';
@@ -208,15 +230,15 @@ function getTicketData() {
 					}, {
 						title : "DISPOSITION"
 					}, {
-						title : "CONTROL_NUMBE"
-					}, {
-						title : "BUG_NUMBER"
-					}, {
 						title : "STATUS"
 					}, {
-						title : "CREATED"
-					}, {
 						title : "ASSIGNED"
+					}, {
+						title : "BUG NUMBER"
+					}, {
+						title : "CONTROL NUMBER"
+					}, {
+						title : "CREATED"
 					} ]
 				});
 				

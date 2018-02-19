@@ -97,7 +97,7 @@ function Incident_VS_SR(line, title, e) {
 						},
 						subtitle : {
 							text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
-									: 'Pinch the chart to zoom in'
+									: ''
 						},
 						xAxis : {
 							type : 'datetime',
@@ -188,7 +188,7 @@ function InflowVSOutflow(ticket_inflow, ticket_outflow, title, category, e) {
 						},
 						subtitle : {
 							text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
-									: 'Pinch the chart to zoom in'
+									: ''
 						},
 						xAxis : {
 							type : 'datetime',
