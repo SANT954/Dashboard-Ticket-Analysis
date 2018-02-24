@@ -5,13 +5,22 @@ function draw_pie(data, e, title) {
 					e,
 					{
 						chart : {
-							plotBackgroundColor : '#E3FFE3',
-							plotBorderWidth : null,
-							plotShadow : false,
+							/*plotBackgroundColor : '#f6f6f6',*/
+							plotBackgroundColor :'#C9D8C6',
+							plotBorderWidth : '4px',
+							plotShadow : true,
 							type : 'pie'
 						},
+ 
+				             zoomType : 'x',
+				             
 						title : {
-							text : title
+							text : title,
+							 style: {
+						         color: 'black',
+						       
+						      }
+						
 						},
 						credits : {
 							enabled : false
@@ -33,8 +42,10 @@ function draw_pie(data, e, title) {
 									enabled : true,
 									format : '<b>{point.name}</b>: {point.percentage:.1f} %',
 									style : {
-										color : (Highcharts.theme && Highcharts.theme.contrastTextColor)
-												|| 'black'
+										color :'blue',
+										 lineHeight: '18px', fontSize: '15px',
+					                    textOutline: false 
+							                
 									}
 								}
 							}
@@ -75,25 +86,31 @@ function Incident_VS_SR(line, title, e) {
 	}
 
 	Highcharts
-			.chart(
-					e,
-					{
-						chart : {
-							plotBackgroundColor : null,
-							plotBorderWidth : null,
-							plotShadow : false,
-						},
-
-						chart : {
-							zoomType : 'x'
-						},credits : {
+			.chart(e, 
+					  {
+			             
+			             chart: {
+			                 backgroundColor: '#f6f6f6',
+			                 BorderWidth : '4px',
+								plotShadow : true,
+			                 type: 'line',
+			         zoomType : 'x',
+			             },
+			             
+			             
+			             credits : {
 							enabled : false
 						},
 						exporting : {
 							enabled : false
 						},
 						title : {
-							text : title
+							text : title,
+							 style: {
+							         color: 'black',
+							       
+							      }
+							
 						},
 						subtitle : {
 							text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
@@ -107,12 +124,24 @@ function Incident_VS_SR(line, title, e) {
 						},
 						yAxis : {
 							title : {
-								text : 'Inflow Count'
+								text : 'Ticket Count',
+									 style: {
+									         color: 'black',
+									       
+									      }
 							}
 						},
 						legend : {
-							enabled : false
+							enabled : true
 						},
+						plotOptions: {
+					        line: {
+					            dataLabels: {
+					                enabled: true
+					            },
+					            enableMouseTracking: true
+					        }
+					    },
 						// var object={'positive':94,'neutral':2,'negative':2};
 
 						series : [ {
@@ -166,17 +195,15 @@ function InflowVSOutflow(ticket_inflow, ticket_outflow, title, category, e) {
 
 	Highcharts
 			.chart(
-					e,
-					{
-						chart : {
-							plotBackgroundColor : null,
-							plotBorderWidth : null,
-							plotShadow : false,
-						},
-
-						chart : {
-							zoomType : 'x'
-						},
+					e, {
+						chart: {
+			                 backgroundColor: '#f6f6f6',
+			                 BorderWidth : '4px',
+								plotShadow : true,
+			                 type: 'line',
+			         zoomType : 'x',
+			             },
+				            
 						credits : {
 							enabled : false
 						},
@@ -184,7 +211,12 @@ function InflowVSOutflow(ticket_inflow, ticket_outflow, title, category, e) {
 							enabled : false
 						},
 						title : {
-							text : title
+							text : title,
+							 style: {
+						         color: 'black',
+						       
+						      }
+						
 						},
 						subtitle : {
 							text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
@@ -198,18 +230,31 @@ function InflowVSOutflow(ticket_inflow, ticket_outflow, title, category, e) {
 						},
 						yAxis : {
 							title : {
-								text : 'Inflow Count'
+								text : 'Ticket Count ',
+								 style: {
+							         color: 'black',
+							       
+							      }
+							
 							}
 						},
+						plotOptions: {
+					        line: {
+					            dataLabels: {
+					                enabled: true
+					            },
+					            enableMouseTracking: true
+					        }
+					    },
 						legend : {
-							enabled : false
+							enabled : true
 						},
 
 						series : [ {
-							name : 'Incident',
+							name : 'Inflow ',
 							data : inflow_data
 						}, {
-							name : 'Incident',
+							name : 'Outflow',
 							data : outflow_data
 						} ]
 

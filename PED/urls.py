@@ -9,8 +9,11 @@ urlpatterns = [
         url(r'^$', views.PED_summary.as_view()),
 		url(r'^sprint_summary/$', views.Fetch_Sprint),
         url(r'^sprint_summary_post_form/$', views.POSTForm),
+        url(r'^pullQuickStats/$', views.pullQuickStats),
 		url(r'^pullLatestData/$', views.pullLatestData),
         url(r'^getTicketData/$', views.getTicketData),
+        url(r'^getTicket_7_Data/$', views.getTicket_7_Data),
+        
         url(r'^pie_data/$', views.pie_data),
         url(r'^InflowVSOutflow/$', views.InflowVSOutflow),
         url(r'^Incident_VS_SR/$', views.Incident_VS_SR),

@@ -2,7 +2,7 @@ import cx_Oracle
 
 ''' queries here '''
 truncate_table="truncate table report"
-incident_sr_count="select CATEGORY , count(*) from report where created>sysdate-5 group by CATEGORY"
+incident_sr_count="select CATEGORY , count(*) from report where created>sysdate-1 group by CATEGORY"
 daily_ticket_inflow="select to_char(Created,'MM-DD-YYYY') as Created , Incident, SR from (SELECT trunc(created) as Created,sum(DECODE(CATEGORY, 'Incident',1,0)) as Incident ,sum(DECODE(CATEGORY, 'Service Request',1,0)) as  SR from report   group by trunc(created) order by created )"
 daily_ticket_outflow="select to_char(Closed) as Closed , Incident, SR from (SELECT trunc(Closed) as Closed,sum(DECODE(CATEGORY, 'Incident',1,0)) as Incident ,sum(DECODE(CATEGORY, 'Service Request',1,0)) as  SR from report where Closed is not null group by trunc(Closed) order by Closed )"
 daily_ticket_inflow_="SELECT to_char(Created,'MM-DD-YYYY') as Created,sum(DECODE(CATEGORY, 'Incident',1,0)) as Incident ,sum(DECODE(CATEGORY, 'Service Request',1,0)) as  SR from report    group by to_char(Created,'MM-DD-YYYY')order by created "
@@ -19,6 +19,18 @@ weekly_ticket_outflow="select COALESCE(t.week_start_date,sysdate),t.incident,t.s
 
 
 
+current_open_count ="select count(*) from report where status not in ('Solved')"
+current_open_incidents="select count(*) from report where status not in ('Solved') and category in ('Incident')"
+current_open_srs="select count(*) from report where status not in ('Solved') and category in ('Service Request')"
+current_open_auto_incidents="select count(*) from report where status not in ('Solved') and category in ('Incident') and CONTROL_NUMBER is not null"
+current_open_manual_incidents="select count(*) from report where status not in ('Solved') and category in ('Incident') and CONTROL_NUMBER is null"
+current_open_p1s="select count(*) from report where status not in ('Solved') and SEVERITY ='1 - Severe Business Impact' "
+current_open_aged_7="select count(*) from report where  status not in ('Solved')  and created< sysdate-7 and created > sysdate-30 "
+current_open_aged_30="select count(*) from report where  created < sysdate-30 and status not in ('Solved')"
+
+
+
+ticketicket_data_7="Select TICKET,CATEGORY,DISPOSITION,ASSIGNED,trim(BUG_NUMBER),  CONTROL_NUMBER   from report where status not in ('Solved')  and created< sysdate-7 and created > sysdate-30"
 
 def getConnectionCursor():
     
