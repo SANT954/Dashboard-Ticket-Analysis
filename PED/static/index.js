@@ -2,6 +2,10 @@ function loadAnimation() {
 
 	disableAllElements()
 
+	// $('#myModal').modal({backdrop: 'static', keyboard: false})  
+
+	
+	
 	// $("#load_confirm").show();
 	// document.getElementById("load_confirm").style.display = 'block';
 	$('#Sync_Job_Status').html("")
@@ -15,7 +19,10 @@ function loadConfirm() {
 	$('#Sync_Job_Status').html("")
 	document.getElementById("loader_id").style.display = 'block';
 	$('#loader_id').addClass('loader').removeClass('nothing')
-
+// Modal start
+	$('#modal-body').html("Data sync here");
+// Modal end	
+	
 	$('#Sync_Job_Status').html("Data Sync In Progress ")
 	var sync_status = getLatestData(mycallback);
 	$('#loader_id').addClass('loader').removeClass('nothing')
@@ -193,6 +200,8 @@ function mycallback(response) {
 	setTimeout(function() {
 
 		$('#loader_id').addClass('nothing').removeClass('loader')
+		
+		$('#modal-body').addClass('nothing').removeClass('loader')
 
 		$('#Sync_Job_Status').html(
 				"Latest Data Sync Completed in " + response.sync_job_status);
