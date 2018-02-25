@@ -31,13 +31,12 @@ function loadConfirm(){
 function pullQuickStats(){
 	
 	disableAllElements()
-	
-	//getTicket_7_Data()
+
 	$.ajax({
 		type : "POST",
 		url : "/pullQuickStats/",
 		data : {
-
+			days_to_search:$('#days_to_search').val()  ,
 			pullQuickStats : 'Yes'
 				
 		},
@@ -53,49 +52,55 @@ function pullQuickStats(){
 			$('#total_open_auto_incidents').html("Count of Open Auto Incidents   :" +data.current_open_auto_incidents);
 			$('#total_open_manual_incidents').html("Count of Open Manual Incidents :" +data.current_open_manual_incidents);
 			$('#total_open_p1s').html("Count of Open P1 Tickets       :" +data.current_open_p1s);
-			$('#total_aged_7').html("Tickets Aged More Than 7 Days  :" + data.current_open_aged_7);
 			$('#total_aged_30').html("Tickets Aged More Than 30 Days :" +data.current_open_aged_30);
+			$('#total_aged_7').html("Tickets Aged More Than 7 Days  :" + data.current_open_aged_7);
+			
 			
 
-			
-			var	oTable=	$('#table_7').DataTable({
-				data : data.ticketicket_data_7,
-				 paging: true,
-				  pageLength: 5,
-				    bLengthChange: false,
-				    info : false,
-				  //  "scrollY": "200px",
-				   // sPaginationType: "four_button",
-				    searching: true,
-				    autoWidth: false,
-				    destroy: true,
-				   /* $(".dataTables_length select").addClass("selectpicker sel_id"),*/
-
-
-				columns : [ {
-					title : "TICKET"
-				}, {
-					title : "CATEGORY"
-				}, {
-					title : "DISPOSITION"
-				}, {
-					title : "ASSIGNED"
-				}, {
-					title : "BUG NUMBER"
-				}, {
-					title : "CONTROL NUMBER"
-				}]
-			});
-
+			displayTable('#table_7',data.ticketicket_data_);
+			//displayTable('#table_30',data.ticketicket_data_30);
 			
 		}
 	})
 	 
 	
+function displayTable(e,table_data){
 
+		
+		var	oTable=	$(e).DataTable({
+			data : table_data,
+			 paging: true,
+			  pageLength: 5,
+			    bLengthChange: false,
+			    info : false,
+			  //  "scrollY": "200px",
+			   // sPaginationType: "four_button",
+			    searching: true,
+			    autoWidth: false,
+			    destroy: true,
+			   /* $(".dataTables_length select").addClass("selectpicker sel_id"),*/
+
+
+			columns : [ {
+				title : "TICKET"
+			}, {
+				title : "CATEGORY"
+			}, {
+				title : "DISPOSITION"
+			}, {
+				title : "ASSIGNED"
+			}, {
+				title : "BUG NUMBER"
+			}, {
+				title : "CONTROL NUMBER"
+			}]
+		});
+
+
+	}
 	
 	
-	
+	document.getElementById("days_to_search").style.display = 'block';
 	document.getElementById("quick_stats_data").style.display = 'block';
 	document.getElementById("table-container_7").style.display = 'block';
 	$('.pie_container').css('display','none');
@@ -263,6 +268,7 @@ function disableAllElements() {
 	document.getElementById("load_confirm").style.display = 'none';
 	$('#Sync_Job_Status').html("")
 	document.getElementById("quick_stats_data").style.display = 'none';
+	
 	
 }
 

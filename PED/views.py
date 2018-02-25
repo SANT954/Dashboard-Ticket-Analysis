@@ -98,21 +98,32 @@ def pullQuickStats(request):
             cur.execute(data_layer.current_open_p1s) 
             current_open_p1s= cur.fetchall()
             
+            
             cur.execute(data_layer.current_open_aged_7) 
             current_open_aged_7= cur.fetchall()
-             
+        
             cur.execute(data_layer.current_open_aged_30) 
             current_open_aged_30= cur.fetchall()
+                
+                
+            days_to_search=request.POST.get('days_to_search')
+            if days_to_search=='Aged Between 7 and 30':
+                cur.execute(data_layer.ticketicket_data_7) 
+                ticketicket_data_ = cur.fetchall()
             
-            cur.execute(data_layer.ticketicket_data_7) 
-            ticketicket_data_7 = cur.fetchall()
+            elif days_to_search== 'Aged Beyond 30':     
+                cur.execute(data_layer.ticketicket_data_30) 
+                ticketicket_data_ = cur.fetchall()
             
+             
+                
+    
     
             return JsonResponse({"current_open_count":current_open_count ,"current_open_incidents":current_open_incidents ,
                                  "current_open_srs":current_open_srs ,"current_open_auto_incidents":current_open_auto_incidents ,
                                  "current_open_manual_incidents":current_open_manual_incidents ,"current_open_p1s":current_open_p1s ,
                                  "current_open_aged_7":current_open_aged_7 ,"current_open_aged_30":current_open_aged_30 ,
-                                 "ticketicket_data_7": ticketicket_data_7})
+                                 "ticketicket_data_": ticketicket_data_})
 
 
 def pullLatestData(request):

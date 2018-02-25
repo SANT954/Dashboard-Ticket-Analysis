@@ -181,6 +181,15 @@ $(function() {
  --> 
  
  <div  class ="row" >
+  
+		<select id="days_to_search" data-live-search="true" data-live-search-style="startsWith"
+			class="selectpicker sel_id" onchange="pullQuickStats()">
+			<option selcted="selected">Aged Beyond 30</option>
+			<!-- <option>Aged Less Than 7</option> -->
+			<option>Aged Between 7 and 30</option>
+			 
+		</select>  
+ 
  		<div id='quick_stats_data' class =" col-lg-4" >
 			<p class="  text_box" id="total_open_tickets"></p>
 			<p class="  text_box" id="total_open_incidents"></p>
@@ -198,6 +207,14 @@ $(function() {
 			<table id="table_7" class="table table-striped table-bordered" 
 				></table>
 		</div>
+		
+<!-- 
+ <div id="table-container_30" class ="col-lg-8 ">
+
+			<table id="table_30" class="table table-striped table-bordered" 
+				></table>
+		</div>		
+		 -->
 </div>
 
  
