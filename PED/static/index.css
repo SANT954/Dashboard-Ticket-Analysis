@@ -1,5 +1,6 @@
 body {
     background-color: white;
+
 }
 
 .container {
@@ -8,10 +9,16 @@ body {
 	
     width: 80%;
     heiht: 100%;
-    background: #EEE;
+    background:  #fffae6
+	;
     margin: auto;
     padding: 10px;
     position:relative;
+    bottom:0px;
+    margin: 0px auto;
+    padding: 10px;
+     box-shadow: 0px 8px 10px gray, 
+        -10px 8px 10px gray, 10px 8px 10px gray;
 }
 
 #dashboard {
@@ -25,9 +32,9 @@ body {
 
 
 #bootstrap-overrides .sel_id .btn-default{
- background-color: #ccccff;
+ background-color: #b3b3b3;;
     /* Green */
-   
+   color:white;
      
    	}
 
@@ -36,14 +43,28 @@ body {
 
 }
 
+
+.bokeh_class{
+	display: inline-block;
+}
+
+.floating-box {
+    display: inline-block;
+    width: 150px;
+    height: 75px;
+    margin: 10px;
+    border: 3px solid #73AD21;  
+}
+
 .button {
-    background-color: #ccccff;
+    background-color: #b3b3b3;
     /* Green */
     border: none;
-    color: black;
+    
     padding: 10px;
     text-align: center;
     text-decoration: none;
+    color:white;
     display: inline-block;
     font-size: 16px;
     margin: 10px 10px;
@@ -61,3 +82,10 @@ body {
 .button2 {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+
+.bk-plot-wrapper table {
+    margin: 0 auto;
+}
+.bk-root { height: auto;
+width: auto; }
