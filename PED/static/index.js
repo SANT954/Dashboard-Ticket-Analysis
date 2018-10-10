@@ -5,6 +5,17 @@ function clearReports(e){
 
 }
 
+function showing_ForText(e){
+	 
+	 var x = document.getElementById("id_select_Sprint").value;
+
+	    console.log(document.getElementById("id_select_Sprint").value);
+
+    document.getElementById('showing_for').innerHTML="Showing " +e.value +" for " + x;
+
+}
+
+
  
 function generateReport(e){
 
