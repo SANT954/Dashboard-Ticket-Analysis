@@ -25,13 +25,13 @@ current_open_srs="select count(*) from report where status not in ('Solved') and
 current_open_auto_incidents="select count(*) from report where status not in ('Solved') and category in ('Incident') and CONTROL_NUMBER is not null"
 current_open_manual_incidents="select count(*) from report where status not in ('Solved') and category in ('Incident') and CONTROL_NUMBER is null"
 current_open_p1s="select count(*) from report where status not in ('Solved') and SEVERITY ='1 - Severe Business Impact' "
-current_open_aged_7="select count(*) from report where  status not in ('Solved')  and created< sysdate-7 and created > sysdate-30 "
+current_open_aged_7="select count(*) from report where  status not in ('Solved')  and created< sysdate-8 and created > sysdate-30 "
 current_open_aged_30="select count(*) from report where  created < sysdate-30 and status not in ('Solved')"
 
 
 
 ticketicket_data_30="Select TICKET,CATEGORY, ASSIGNED,trim(BUG_NUMBER),trunc(sysdate-created) as AGE,   CONTROL_NUMBER   from report where status not in ('Solved')  and created< sysdate-30"
-ticketicket_data_7="Select TICKET,CATEGORY,ASSIGNED,trim(BUG_NUMBER),trunc(sysdate-created) as AGE,  CONTROL_NUMBER   from report where status not in ('Solved')  and created< sysdate-7 and created > sysdate-30"
+ticketicket_data_7="Select TICKET,CATEGORY,ASSIGNED,trim(BUG_NUMBER),trunc(sysdate-created) as AGE,  CONTROL_NUMBER   from report where status not in ('Solved')  and created< sysdate-8 and created > sysdate-30"
 
 
 def getConnectionCursor():

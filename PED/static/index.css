@@ -109,8 +109,8 @@ green : 6B8E23
 medium stale blue : 7B68EE
 */
 .text_box{
-	background-color: #4169E1	;
-    /* Green */
+	 background-color: #4169E1	;
+    Green
     border: none;
     
     padding: 8px;
@@ -122,13 +122,27 @@ medium stale blue : 7B68EE
     margin: 10px; 
     cursor: pointer;
     -webkit-transition-duration: 0.4s;
-    /* Safari */
+    
     transition-duration: 0.4s;
-    
-    
+     
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    
-    }
+     
+      -webkit-transform: translate(-200px, -50px);
+    -webkit-animation-name: text_box;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-delay: 200ms; 
+  
+	}
+	
+	
+	@keyframes text_box{
+    0% { transform: translate(-200px, -100px); }
+    100% { transform: translate(-15px,  10px); }
+}
+   
+   
 .pie_container {
      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
   
@@ -187,5 +201,9 @@ margin-top: 5px;    margin-bottom: 5px;
   table-layout: fixed;  
   word-wrap:break-word;  
 }
+ 
+ 
+ 
+ 
  
  

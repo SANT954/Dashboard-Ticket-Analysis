@@ -40,8 +40,6 @@ $(function() {
 	<div class="container">
 		<h2 id="dashboard">Production Engineering Dashboard</h2>
 
-
-
  	 <!-- 
 		<select data-live-search="true" data-live-search-style="startsWith"
 			class="selectpicker sel_id" >
@@ -80,7 +78,32 @@ $(function() {
 
 </div>
 
- 		 		<div id="loader_id"  style=" margin: 50px 400px 40px 500px"; class="nothing"></div>
+<div id="loader_id"  style=" margin: 50px 400px 40px 500px"; class="nothing"></div> 
+		<!-- <div id="loader_id"  style=" margin: 50px 400px 40px 500px"; class="nothing"></div> --> 
+ 
+ 		 		
+ 
+ 
+   <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <div id="loader_id"  style=" margin: 50px 40px 40px 200px" class="loader"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
  
 		<div>
 
@@ -140,7 +163,7 @@ $(function() {
 		</select>  
  
  		<div  class =" col-lg-4" >
-			<p class="  text_box" id="total_open_tickets"></p>
+ 			<p class="  text_box" id="total_open_tickets"></p>
 			<p class="  text_box" id="total_open_incidents"></p>
 			<p class="  text_box" id="total_open_sr"></p>
 			<p class="  text_box" id="total_open_auto_incidents"></p>
