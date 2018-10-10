@@ -16,6 +16,9 @@ class PED_summary(TemplateView):
         return render(request, 'index.html', {'form':form})
 
 
+
+		
+		
 def Fetch_Sprint(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -69,6 +72,16 @@ def POSTForm(request):
        # return render(request, 'index.html', {'script': script,'div':div})
         return JsonResponse({"script": script, "div": div})
 
+		
+ 
+
+def DataPull(request):
+    
+    if request.method == 'POST':
+        x = request.POST.get('pulldata')
+        if x=='Yes':
+            return JsonResponse({"name": "santosh", "stargazers_count": "asdfa", "forks_count": "asdfa", "description": "asdfa"})
+		
  
 def Ajax_Test(request):
         if request.method == 'GET':
