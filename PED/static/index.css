@@ -23,23 +23,13 @@ body {
 	display: inline-block;
 }
 
-#id_select_Sprint {
- background-color: #ccccff;
-	
-    border: none;
-    color: black;
-    padding: 8px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    margin: 10px 300px;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s;
-    /* Safari */
-    transition-duration: 0.4s;
 
-   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	}
+#bootstrap-overrides .sel_id .btn-default{
+ background-color: #ccccff;
+    /* Green */
+   
+     
+   	}
 
 #showing_for {
     color: #ff0066;
@@ -70,9 +60,4 @@ body {
 
 .button2 {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.bk-canvas-events{
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	
 }

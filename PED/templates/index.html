@@ -5,36 +5,70 @@
     <title>SPM Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+   
     <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/index.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.css">
+    
+    
        
+    
+   <script>
+
+/*    $(document).ready(function() {
+		$("#new_bt").click(function(){	
+
+			doSomething();
+			
+    });
+		});
+    */
+   </script>
     
 </head>
 
-<body>
+<body id="bootstrap-overrides">
     <div class="container">
         <h2 id="dashboard">Production Engineering Dashboard</h2>
                 
-        
-        <form action="/sprint_summary/" method="POST">{% csrf_token %} {{form}}
-        	
-            <div id="buttons">
-                <input  id="bug_report" type='submit' value ="Bug Report" name="Bug Report"  class="button button1" onClick="showing_ForText(this)"/>
-            <input id="ticket_report" type='submit' value= "Ticket Report" name="Ticket Report"  class="button button2" onClick="showing_ForText(this)"/>
-        
-            </div>
-        </form>
+     
+ 
+<select  data-live-search="true" data-live-search-style="startsWith" class="selectpicker sel_id">
+<option selcted= "selected">Select Sprint</option>
+<option >17.12</option>
+<option >18.2</option>    </select>   
+       <!-- <form action="/sprint_summary_post_form/" method="POST">{% csrf_token %} {{form}} -->
+
+		<div id="buttons">
+			<button id="bug_report" type='button' value="Bug Report"
+				name="Bug Report" class="button button1" onClick="doPOSTForm(this)">Bug_Report</button>
+			<button id="ticket_report" type='button' value="Ticket Report"
+				name="Ticket Report" class="button button2"
+				onClick="doPOSTForm(this)">Ticket_Report</button>
+
+		</div>
+		<!-- </form> -->
         <div><p id="showing_for"></p></div>
-        <div id="bokeh_id">
+    
+    <div id="bokeh_graph" >
              {{ div | safe }}
-        
         </div>
-        <img src="" id="image_box" align="middle">
-        
-    </div>
+    {{ script | safe}}
 </body>
-    <script type="text/javascript" src="/static/index.js"></script>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+
+
 	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
-    {{ script | safe }}
+
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.js"></script>
+ 	
+    <script type="text/javascript" src="/static/index.js"></script>
 	
 </html>
