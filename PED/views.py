@@ -1,3 +1,5 @@
+
+import requests
 import datetime
 from django.shortcuts import   render
 from django.template.loader import get_template
@@ -9,16 +11,19 @@ from .reports import InteractiveGraph
 from django.http.response import HttpResponse, JsonResponse
 from PED import data_layer
 from cx_Oracle import Connection as con
+from PED.data_layer import incident_sr_count
 # Create your views here.
+
  
+ 
+con = data_layer.getConnectionCursor()
+cur=con.cursor()
+     
 class PED_summary(TemplateView):
 
     def get(self, request, **kwargs):
         form = srint_select_form(initial={'18.2': '18.2'})
         return render(request, 'index.html', {'form':form})
-
-
-
 		
 		
 def Fetch_Sprint(request):
@@ -47,21 +52,16 @@ def Fetch_Sprint(request):
         form = srint_select_form()
 
     return render(request, 'about.html', {'form': form})
- 
         
 
 def POSTForm(request):
     # if this is a POST request we need to process the form data
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return JsonResponse({"script": "Ticket Details Will Appear Here"})
         # create a form instance and populate it with data from the request:
         
-        #report_type': ['Ticket Report'
-        x = request.POST.get('report_type')
-        if x=='Ticket Report':
-            script, div = InteractiveGraph().genTicketReport()
-        elif x=='Bug Report':
-            script, div = InteractiveGraph().genTicketReport()
-            
+        # report_type': ['Ticket Report'
+       
             # process the data in form.cleaned_data as required
             # ...HttpResponseRedirect('/' +data+'/')
             # redirect to a new URL:'/PED_summary/',
@@ -73,153 +73,234 @@ def POSTForm(request):
 #         return HttpResponse(html)    
 #         
        # return render(request, 'index.html', {'script': script,'div':div})
-        return JsonResponse({"script": script, "div1": div,"div2": div,"div3": div})
-
-		
+        #return JsonResponse({"script": "script"})
  
 
-def DataPull(request):
+def pullLatestData(request):
+    sync_job_status=''
     
+    current_date="''"
+        
+    try:
+        
+        url='https://oihap.oraclecorp.com/osbcommon/TicketingService/TicketingRest/reports?id=103784&system=oal%20osvc'
+        response = requests.get(url)
+        response.encoding = 'utf-8'
+        jsonResponse= response.json()
+        
+        jsonData = jsonResponse["report"]
+        column=jsonData[0].get('columns')
+        data=jsonData[0].get('rows')
+        dat=data
+        print(len(dat))
+        cur.execute(data_layer.truncate_table)
+        for rec in dat:
+            '''name = item.get("rows")
+            campaignID = item.get("lookupName")
+            print(name)
+            print(campaignID)'''
+            item=rec.split(',')
+             
+            #print(item)
+            if len(item[11])==0:
+                item[11]="''"
+                
+            cur.execute("INSERT INTO REPORT ( TICKET, QUEUE, PRODUCT_ID, SOURCE_SYSTEM, CATEGORY, DISPOSITION, CONTROL_NUMBER, BUG_NUMBER, SEVERITY, STATUS,CREATED, CLOSED, ASSIGNED, UPDATED,  PRODUCT_HIERARCHY,  CREATED_BY ) VALUES ('"
+            + str(item[0]) + '\',\'' +  str(item[1])+ '\',\'' 
+            + str(item[2]) + '\',\'' +  str(item[3])+ '\',\''
+            + str(item[4]) + '\',\'' +  str(item[5])+ '\',\''  
+            + str(item[6]) + '\',\'' +  str(item[7])+ '\',\''  
+            + str(item[8]) + '\',\'' +  str(item[9])+ '\','  
+            #+ item[10] + '\',\'' +  item[11]+ '\',\''  
+            + "to_date("  +  str(item[10])  +",'yyyy-mm-dd hh24:mi:ss')" +','
+            + "to_date("  +  str(item[11])  +",'yyyy-mm-dd hh24:mi:ss')"+  ',\'' 
+            + str(item[12]) + '\',' 
+            + "to_date("  +  str(item[13])  +",'yyyy-mm-dd hh24:mi:ss')"+  ',\''  
+            + str(item[14]) + '\',\''  
+           # + "q\"[" +item[15] + "]\""+ '\',\'' +  str(item[16])+  "')")
+            +  str(item[15])+  "')")
+            con.commit()
+        
+        print("executed")
+            
+            
+        
+    except Exception as e :
+        print(e) 
+        sync_job_status='Error'
+        current_date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S");
+        
+        
+    else: 
+        sync_job_status='Success'
+        current_date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S");
+        
+        
+        
+    finally :
+        cur.execute("INSERT INTO sync_job_status (last_updated_status, last_updated) VALUES ('" + sync_job_status +"'," + "to_date('"  +  str(current_date)  +"','yyyy-mm-dd hh24:mi:ss')"+ ")")
+        con.commit()                
+    return JsonResponse({"sync_job_status":sync_job_status})        
+
+
+def getTicketData(request):
     if request.method == 'POST':
-        x = request.POST.get('pulldata')
-        if x=='Yes':
-            return JsonResponse({"name": "santosh", "stargazers_count": "asdfa", "forks_count": "asdfa", "description": "asdfa"})
-		
+        if request.POST.get('getTicketData') =='Yes':
+            
+            cur.execute(data_layer.ticketicket_data_report) 
+            ticketicket_data_report = cur.fetchall()
+            
+            return JsonResponse({ "daily_ticket_inflow": ticketicket_data_report})
+            		
  
 def Ajax_Test(request):
         if request.method == 'GET':
                
-               return HttpResponse("Successful GET request!") # Sending an success response
-        elif request.method=='POST':
+               return HttpResponse("Successful GET request!")  # Sending an success response
+        elif request.method == 'POST':
                return HttpResponse("Successful POST request!")
-           
            
 
 def pie_data(request):
- 
-    
     
     if request.method == 'POST':
         x = request.POST.get('pie_data')
-        if x=='Yes':
+        if x == 'Yes':
             x
-            cur=data_layer.getConnectionCursor()
+            
              
             cur.execute(data_layer.incident_sr_count)
-            dic ={}
+            incident_sr_count = {}
             
             for result in cur:
-                dic.update({result[0]:result[1]})
+                incident_sr_count.update({result[0]:result[1]})
               
+            cur.execute(data_layer.ticket_status)
+            ticket_status = {}
             
+            for result in cur:
+                ticket_status.update({result[0]:result[1]})
             
-            return JsonResponse({ "pie_dat": dic})
-        
-           
-           
-           
+            cur.execute(data_layer.ticket_source)
+            ticket_source = {}
+            
+            for result in cur:
+                ticket_source.update({result[0]:result[1]})
+            
+            cur.execute(data_layer.open_tickets_by_queue)
+            open_tickets_by_queue = {}
+            
+            for result in cur:
+                open_tickets_by_queue.update({result[0]:result[1]})
+            
+            cur.execute(data_layer.open_sr_ticket_source)
+            open_sr_ticket_source = {}
+            
+            for result in cur:
+                open_sr_ticket_source.update({result[0]:result[1]})
+            
+            cur.execute(data_layer.open_incident_ticket_source)
+            open_incident_ticket_source = {}
+            
+            for result in cur:
+                open_incident_ticket_source.update({result[0]:result[1]})
+            
+            return JsonResponse({ "incident_sr_count":incident_sr_count,"ticket_status":ticket_status,
+                                 "ticket_source":ticket_source,"open_tickets_by_queue":open_tickets_by_queue,"open_sr_ticket_source":open_sr_ticket_source,
+                                 "open_incident_ticket_source":open_incident_ticket_source
+                                 
+                                 })
            
  
 def Incident_VS_SR(request):
- 
-    
     
     if request.method == 'POST':
         x = request.POST.get('Incident_VS_SR')
-        if x=='Yes':
+        if x == 'Yes':
             try:
                      
-                cur=data_layer.getConnectionCursor()
-                
+                 
                 '''Daily inflow ''' 
                 cur.execute(data_layer.daily_ticket_inflow)
                 daily_ticket_inflow = cur.fetchall()
                 
                 '''Daily outflow'''
                 cur.execute(data_layer.daily_ticket_outflow)
-                daily_ticket_outflow= cur.fetchall()
+                daily_ticket_outflow = cur.fetchall()
                 
                 '''Weekly inflow''' 
                 cur.execute(data_layer.weekly_ticket_inflow)
-                weekly_ticket_inflow= cur.fetchall()
+                weekly_ticket_inflow = cur.fetchall()
                 
                 '''Weekly outflow'''
                 cur.execute(data_layer.weekly_ticket_outflow)
-                weekly_ticket_outflow= cur.fetchall()
-                
+                weekly_ticket_outflow = cur.fetchall()
                   
             except:
                 print("error occured")
             
-            return JsonResponse({ "daily_ticket_inflow": daily_ticket_inflow,"daily_ticket_outflow": daily_ticket_outflow,
-                                  "weekly_ticket_inflow": weekly_ticket_inflow,"weekly_ticket_outflow": weekly_ticket_outflow
+            return JsonResponse({ "daily_ticket_inflow": daily_ticket_inflow, "daily_ticket_outflow": daily_ticket_outflow,
+                                  "weekly_ticket_inflow": weekly_ticket_inflow, "weekly_ticket_outflow": weekly_ticket_outflow
                                  
                                  })
         
     
 def InflowVSOutflow(request):
- 
-    
     
     if request.method == 'POST':
         x = request.POST.get('InflowVSOutflow')
-        if x=='Yes':
+        if x == 'Yes':
             try:
                      
-                cur=data_layer.getConnectionCursor()
-                
+                 
                 '''Daily inflow ''' 
                 cur.execute(data_layer.daily_ticket_inflow)
                 daily_tick_inflow = cur.fetchall()
                 
-                daily_ticket_inflow=make_consistent(daily_tick_inflow)
-                subset = daily_ticket_inflow[['Created','Incident_Count','SR_Count']]
+                daily_ticket_inflow = make_consistent(daily_tick_inflow)
+                subset = daily_ticket_inflow[['Created', 'Incident_Count', 'SR_Count']]
                 tuples_inflow = [tuple(x) for x in subset.values] 
-
                 
-                #daily_ticket_inflow['Created','Incident_Count','SR_Count']
+                # daily_ticket_inflow['Created','Incident_Count','SR_Count']
                 '''Daily outflow'''
                 cur.execute(data_layer.daily_ticket_outflow)
-                daily_tick_outflow= cur.fetchall()
+                daily_tick_outflow = cur.fetchall()
                 
-                daily_ticket_outflow=make_consistent(daily_tick_outflow)
-                #daily_ticket_outflow['Created','Incident_Count','SR_Count']
-                subset_outflow = daily_ticket_inflow[['Created','Incident_Count','SR_Count']]
+                daily_ticket_outflow = make_consistent(daily_tick_outflow)
+                # daily_ticket_outflow['Created','Incident_Count','SR_Count']
+                subset_outflow = daily_ticket_inflow[['Created', 'Incident_Count', 'SR_Count']]
                 tuples_outflow = [tuple(x) for x in subset_outflow.values]
                 
                 '''Weekly inflow''' 
                 cur.execute(data_layer.weekly_ticket_inflow)
-                weekly_ticket_inflow= cur.fetchall()
+                weekly_ticket_inflow = cur.fetchall()
                 
                 '''Weekly outflow'''
                 cur.execute(data_layer.weekly_ticket_outflow)
-                weekly_ticket_outflow= cur.fetchall()
-                
+                weekly_ticket_outflow = cur.fetchall()
                   
             except Exception as e:
                 print(e)
             
-            return JsonResponse({ "daily_ticket_inflow":daily_tick_inflow,"daily_ticket_outflow":daily_tick_outflow,
-                                  "weekly_ticket_inflow": weekly_ticket_inflow,"weekly_ticket_outflow": weekly_ticket_outflow
+            return JsonResponse({ "daily_ticket_inflow":daily_tick_inflow, "daily_ticket_outflow":daily_tick_outflow,
+                                  "weekly_ticket_inflow": weekly_ticket_inflow, "weekly_ticket_outflow": weekly_ticket_outflow
                                  
                                  })
-        
 
 
-def make_consistent(daily_ticket_inflow ):
-    daily_ticket_inflow_df=pd.DataFrame(daily_ticket_inflow,columns=['Created','Incident_Count','SR_Count'])
+def make_consistent(daily_ticket_inflow):
+    daily_ticket_inflow_df = pd.DataFrame(daily_ticket_inflow, columns=['Created', 'Incident_Count', 'SR_Count'])
     print(daily_ticket_inflow_df.head(1))
     print(daily_ticket_inflow_df.dtypes)
     now = datetime.datetime.now()
-    sysdate=now.strftime("%Y%m%d")
+    sysdate = now.strftime("%Y%m%d")
     daily_ticket_inflow_df['Created'] = pd.to_datetime(daily_ticket_inflow_df['Created'])
     print(daily_ticket_inflow_df.dtypes)
-    dates_df=pd.DataFrame({'Created':pd.date_range('20170324', sysdate)}) 
+    dates_df = pd.DataFrame({'Created':pd.date_range('20170324', sysdate)}) 
     print(dates_df.head(1))
-    #dates_df.loc['Incident_Count']=daily_ticket_inflow.['Incident_Count'] 
-    #new_df=pd.merge(dates_df,daily_ticket_inflow_df,how='left',on='Created')
+    # dates_df.loc['Incident_Count']=daily_ticket_inflow.['Incident_Count'] 
+    # new_df=pd.merge(dates_df,daily_ticket_inflow_df,how='left',on='Created')
     return pd.merge(dates_df, daily_ticket_inflow_df, on='Created', how='outer')
 
-
-    #new_df.to_csv(r"D:\PE report\new.csv")
+    # new_df.to_csv(r"D:\PE report\new.csv")
     
