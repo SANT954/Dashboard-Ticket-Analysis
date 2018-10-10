@@ -1,108 +1,115 @@
-function loadAnimation(){
+function loadAnimation() {
 
-	disableAllElements()	
-	
-//        $("#load_confirm").show();
-//	document.getElementById("load_confirm").style.display = 'block';
+	disableAllElements()
+
+	// $("#load_confirm").show();
+	// document.getElementById("load_confirm").style.display = 'block';
 	$('#Sync_Job_Status').html("")
-	
+
 	loadConfirm()
-	//$("#load_confirm").click(function(){});
-    
-	
+	// $("#load_confirm").click(function(){});
 
 }
 
-
-function loadConfirm(){
+function loadConfirm() {
 	$('#Sync_Job_Status').html("")
 	document.getElementById("loader_id").style.display = 'block';
 	$('#loader_id').addClass('loader').removeClass('nothing')
 
 	$('#Sync_Job_Status').html("Data Sync In Progress ")
-	var sync_status=getLatestData(mycallback);
+	var sync_status = getLatestData(mycallback);
 	$('#loader_id').addClass('loader').removeClass('nothing')
-	
-	
 
 }
 
+function pullQuickStats() {
 
-function pullQuickStats(){
-	
 	disableAllElements()
-	
-	//getTicket_7_Data()
-	$.ajax({
-		type : "POST",
-		url : "/pullQuickStats/",
-		data : {
 
-			pullQuickStats : 'Yes'
-				
-		},
-	    //async: false, 
+	$
+			.ajax({
+				type : "POST",
+				url : "/pullQuickStats/",
+				data : {
+					days_to_search : $('#days_to_search').val(),
+					pullQuickStats : 'Yes'
 
- 
-		success : function(data) {
+				},
+				// async: false,
 
-			$('#total_open_tickets').html("Count of Open Tickets          :" +data.current_open_count);		 
-			
-			$('#total_open_incidents').html("Count of Open Incidents        :" +data.current_open_incidents);
-			$('#total_open_sr').html("Count of Open Service Requests :" +data.current_open_srs);
-			$('#total_open_auto_incidents').html("Count of Open Auto Incidents   :" +data.current_open_auto_incidents);
-			$('#total_open_manual_incidents').html("Count of Open Manual Incidents :" +data.current_open_manual_incidents);
-			$('#total_open_p1s').html("Count of Open P1 Tickets       :" +data.current_open_p1s);
-			$('#total_aged_7').html("Tickets Aged More Than 7 Days  :" + data.current_open_aged_7);
-			$('#total_aged_30').html("Tickets Aged More Than 30 Days :" +data.current_open_aged_30);
-			
+				success : function(data) {
 
-			
-			var	oTable=	$('#table_7').DataTable({
-				data : data.ticketicket_data_7,
-				 paging: true,
-				  pageLength: 5,
-				    bLengthChange: false,
-				    info : false,
-				  //  "scrollY": "200px",
-				   // sPaginationType: "four_button",
-				    searching: true,
-				    autoWidth: false,
-				    destroy: true,
-				   /* $(".dataTables_length select").addClass("selectpicker sel_id"),*/
+					$('#total_open_tickets').html(
+							"Count of Open Tickets          :"
+									+ data.current_open_count);
 
+					$('#total_open_incidents').html(
+							"Count of Open Incidents        :"
+									+ data.current_open_incidents);
+					$('#total_open_sr').html(
+							"Count of Open Service Requests :"
+									+ data.current_open_srs);
+					$('#total_open_auto_incidents').html(
+							"Count of Open Auto Incidents   :"
+									+ data.current_open_auto_incidents);
+					$('#total_open_manual_incidents').html(
+							"Count of Open Manual Incidents :"
+									+ data.current_open_manual_incidents);
+					$('#total_open_p1s').html(
+							"Count of Open P1 Tickets       :"
+									+ data.current_open_p1s);
+					$('#total_aged_30').html(
+							"Tickets Aged More Than 30 Days :"
+									+ data.current_open_aged_30);
+					$('#total_aged_7').html(
+							"Tickets Aged More Than 7 Days  :"
+									+ data.current_open_aged_7);
 
-				columns : [ {
-					title : "TICKET"
-				}, {
-					title : "CATEGORY"
-				}, {
-					title : "DISPOSITION"
-				}, {
-					title : "ASSIGNED"
-				}, {
-					title : "BUG NUMBER"
-				}, {
-					title : "CONTROL NUMBER"
-				}]
-			});
+					displayTable('#table_7', data.ticketicket_data_);
+					// displayTable('#table_30',data.ticketicket_data_30);
 
-			
-		}
-	})
-	 
-	
+				}
+			})
 
-	
-	
-	
+	function displayTable(e, table_data) {
+
+		var oTable = $(e).DataTable({
+			data : table_data,
+			paging : true,
+			pageLength : 6,
+			bLengthChange : false,
+			info : false,
+			// "scrollY": "200px",
+			// sPaginationType: "four_button",
+			searching : true,
+			autoWidth : false,
+			destroy : true,
+			/* $(".dataTables_length select").addClass("selectpicker sel_id"), */
+
+			columns : [ {
+				title : "TICKET"
+			}, {
+				title : "CATEGORY"
+			}, {
+				title : "ASSIGNED"
+			}, {
+				title : "BUG NUMBER"
+			}, {
+				title : "AGE (DAYS)"
+			}, {
+				title : "CONTROL NUMBER"
+			} ]
+		});
+
+	}
+
+	document.getElementById("days_to_search").style.display = 'block';
 	document.getElementById("quick_stats_data").style.display = 'block';
 	document.getElementById("table-container_7").style.display = 'block';
-	$('.pie_container').css('display','none');
-	$('.line_container').css('display','none');
-	
-	
-	 }
+	$('.pie_container').css('display', 'none');
+	$('.line_container').css('display', 'none');
+
+}
 
 function clearReports(e) {
 
@@ -179,27 +186,24 @@ function doSomething() {
  * success : function(data) { $('#table').bootstrapTable({ data: data } }) } }
  */
 
+function mycallback(response) {
+	console.log(response)
+	var delayInMilliseconds = 2000; // 1 second
 
- function mycallback(response){
-	 console.log(response)
-		var delayInMilliseconds =2000; //1 second
+	setTimeout(function() {
 
-	 setTimeout(function() {
+		$('#loader_id').addClass('nothing').removeClass('loader')
 
-	 $('#loader_id').addClass('nothing').removeClass('loader')
+		$('#Sync_Job_Status').html(
+				"Latest Data Sync Completed in " + response.sync_job_status);
 
-	 $('#Sync_Job_Status').html("Latest Data Sync Completed in " + response.sync_job_status);
+	}, delayInMilliseconds);
 
-	 }, delayInMilliseconds);
-
-
- }
+}
 
 function getLatestData(callback) {
 	console.log("asdfasdf");
 	var sync_status;
-	
-	
 
 	$.ajax({
 		type : "POST",
@@ -207,50 +211,45 @@ function getLatestData(callback) {
 		data : {
 			id_select_Sprint : $('#id_select_Sprint').val(),
 			pulldata : 'Yes'
-				
+
 		},
-	    //async: false, 
+		// async: false,
 
-		success: mycallback
-		
+		success : mycallback
+
 	})
-	}
-
-function handleData(data /* , textStatus, jqXHR */ ) {
-    alert(data);
-  console.log(data)
 }
 
-
+function handleData(data /* , textStatus, jqXHR */) {
+	alert(data);
+	console.log(data)
+}
 
 function loadConfirmSync() {
 	$.confirm({
-	    title: 'Confirm to Sync Data?',
-	    content: '',
-	    buttons: {
-	        confirm: function () {
-	          //  $.alert('Confirmed!');
-	            loadAnimation();
-	        },
-	        cancel: function () {
-	            $.alert('Canceled!');
-	        }/*,
-	        somethingElse: {
-	            text: 'Something else',
-	            btnClass: 'btn-blue',
-	            keys: ['enter', 'shift'],
-	            action: function(){
-	                $.alert('Something else?');
-	            }*/
-	        }
-	    })
-	};
+		title : 'Confirm to Sync Data?',
+		content : '',
+		buttons : {
+			confirm : function() {
+				// $.alert('Confirmed!');
+				loadAnimation();
+			},
+			cancel : function() {
+				$.alert('Canceled!');
+			}/*
+				 * , somethingElse: { text: 'Something else', btnClass:
+				 * 'btn-blue', keys: ['enter', 'shift'], action: function(){
+				 * $.alert('Something else?'); }
+				 */
+		}
+	})
+};
 
 function disableAllElements() {
 	document.getElementById("container1").style.display = 'none';
 	document.getElementById("container2").style.display = 'none';
 	document.getElementById("container3").style.display = 'none';
-	document.getElementById("container4").style.display = 'none'; 
+	document.getElementById("container4").style.display = 'none';
 	document.getElementById("pie_container1").style.display = 'none';
 	document.getElementById("pie_container2").style.display = 'none';
 	document.getElementById("pie_container3").style.display = 'none';
@@ -259,24 +258,16 @@ function disableAllElements() {
 	document.getElementById("pie_container6").style.display = 'none';
 	document.getElementById("table-container").style.display = 'none';
 	document.getElementById("table-container_7").style.display = 'none';
+	
 	document.getElementById("loader_id").style.display = 'none';
-	document.getElementById("load_confirm").style.display = 'none';
 	$('#Sync_Job_Status').html("")
 	document.getElementById("quick_stats_data").style.display = 'none';
-	
+	$('.pie_container').css('display', 'none');
 }
 
-
- 
-
-
 function getTicketData() {
-	
-	disableAllElements();
-	
-	
-	document.getElementById("table-container").style.display = 'block';
 
+	
 	$.ajax({
 		type : "POST",
 		url : "/getTicketData/",
@@ -288,20 +279,22 @@ function getTicketData() {
 
 		success : function(data) {
 
-			/*
-			 * $('#ticket_table').bootstrapTable({ data:
-			 * [data.daily_ticket_inflow] })
-			 */
+			disableAllElements();
 
+			document.getElementById("table-container").style.display = 'block';
+
+ 
 			$(document).ready(function() {
-				
-			var	oTable=	$('#ticket_table').DataTable({
-					data : data.daily_ticket_inflow,
-					 paging: true,
-					    searching: true,
-					    destroy: true,
-					   /* $(".dataTables_length select").addClass("selectpicker sel_id"),*/
 
+				var oTable = $('#ticket_table').DataTable({
+					data : data.daily_ticket_inflow,
+					paging : true,
+					searching : true,
+					destroy : true,
+					/*
+					 * $(".dataTables_length select").addClass("selectpicker
+					 * sel_id"),
+					 */
 
 					columns : [ {
 						title : "TICKET"
@@ -321,94 +314,56 @@ function getTicketData() {
 						title : "CREATED"
 					} ]
 				});
-				
-			onhover()
-				  oTable.$('tr').tooltip( {
-				        "delay": 0,
-				        "track": true,
-				        "fade": 250
-				        
-				    } );
-				
+
+				onhover()
+				oTable.$('tr').tooltip({
+					"delay" : 0,
+					"track" : true,
+					"fade" : 250
+
+				});
+
 			});
 
 		}
 	})
 }
 
+function onhover() {
 
-
-
-
-
-
- 
-
-
-
-
-function onhover(){
-	
-	$("#ticket_table  tbody tr").on('mouseover',function () {
+	$("#ticket_table  tbody tr").on('mouseover', function() {
 		var thText = $(this).text();
 		var hoverTxt;
 		$.ajax({
 			type : "GET",
-			//http://jsfiddle.net/0g2axdt5/ refer to this for hover
-			url:"/sprint_summary_post_form",
-			//url : "https://oihap.oraclecorp.com/osbcommon/TicketingService/TicketingRest/tickets?lookupName=170324-000888&system=oal%20osvc",
-		async : false,
-		success : function(respText) {
-		hoverTxt = respText;
-		}
+			// http://jsfiddle.net/0g2axdt5/ refer to this for hover
+			url : "/sprint_summary_post_form",
+			// url :
+			// "https://oihap.oraclecorp.com/osbcommon/TicketingService/TicketingRest/tickets?lookupName=170324-000888&system=oal%20osvc",
+			async : false,
+			success : function(respText) {
+				hoverTxt = respText;
+			}
 		});
-		this.setAttribute( 'title', hoverTxt.script );
-		});
+		this.setAttribute('title', hoverTxt.script);
+	});
 	/*
-$('#ticket_table tbody tr').each( function() {	
-    var sTitle;
-    var nTds = $('td', this);
-    var ticket_num = $(nTds[0]).text();
+	 * $('#ticket_table tbody tr').each( function() { var sTitle; var nTds =
+	 * $('td', this); var ticket_num = $(nTds[0]).text();
+	 * 
+	 * $.ajax({ type : "POST", url : "/sprint_summary_post_form/", data: "ASDF",
+	 * 
+	 * success : function(data) { console.log(data) sTitle = data.script; }
+	 *  } ) this.setAttribute( 'title', data.script );
+	 */
 
-    $.ajax({
-		type : "POST",
-		url : "/sprint_summary_post_form/",
-	    data: "ASDF",
-
-		success : function(data) {
-			console.log(data)
-        sTitle = data.script;
-		}
-    
-              } )
-              this.setAttribute( 'title', data.script );
-*/	
-	
-    
-        
-    
-	  }
-
-
-
+}
 
 function pie_data() {
 
-	disableAllElements()
-
-	$('.line_container').css('display','none');
-	$('.pie_container').css('display','block');
 	
- 
-	document.getElementById("pie_container1").style.display = 'block';
-	document.getElementById("pie_container2").style.display = 'block';
-	document.getElementById("pie_container3").style.display = 'block';
-	document.getElementById("pie_container4").style.display = 'block';
-	document.getElementById("pie_container5").style.display = 'block';
-	document.getElementById("pie_container6").style.display = 'block';
 
-	$
-			.ajax({
+	$.ajax({
 				type : "POST",
 				url : "/pie_data/",
 				data : {
@@ -418,7 +373,19 @@ function pie_data() {
 
 				success : function(data) {
 
- 
+					disableAllElements()
+
+					$('.line_container').css('display', 'none');
+					$('.pie_container').css('display', 'block');
+
+					document.getElementById("pie_container1").style.display = 'block';
+					document.getElementById("pie_container2").style.display = 'block';
+					document.getElementById("pie_container3").style.display = 'block';
+					document.getElementById("pie_container4").style.display = 'block';
+					document.getElementById("pie_container5").style.display = 'block';
+					document.getElementById("pie_container6").style.display = 'block';
+					
+					
 					incident_sr_count = data.incident_sr_count;
 					ticket_status = data.ticket_status;
 					ticket_source = data.ticket_source;
@@ -474,10 +441,12 @@ function pie_data() {
 						});
 					}
 
-					 Highcharts.setOptions({
-					     colors: ['#fa8d3d','#4169E1',	 '#7fd13b', '#ED561B', '#DDDF00', '#24CBE5', '#775f55', '#FF9655', '#FFF263','#6AF9C4']
-					    });
-					
+					Highcharts.setOptions({
+						colors : [ '#fa8d3d', '#4169E1', '#7fd13b', '#ED561B',
+								'#DDDF00', '#24CBE5', '#775f55', '#FF9655',
+								'#FFF263', '#6AF9C4' ]
+					});
+
 					draw_pie(isc, 'pie_container1', "Incident vs SR Count");
 					draw_pie(tstatus, 'pie_container2',
 							"Current Open Tickets By Status");
@@ -505,23 +474,16 @@ function pie_data() {
 
 function Draw_InflowVSOutflow() {
 
-	 Highcharts.setOptions({
-	     colors: ['#fa8d3d','#4169E1',	 '#7fd13b', '#ED561B', '#DDDF00', '#24CBE5', '#775f55', '#FF9655', '#FFF263','#6AF9C4'],
-	     });
+	Highcharts.setOptions({
+		colors : [ '#fa8d3d', '#4169E1', '#7fd13b', '#ED561B', '#DDDF00',
+				'#24CBE5', '#775f55', '#FF9655', '#FFF263', '#6AF9C4' ],
+	});
 
 	 
-	 $('.pie_container').css('display','none');
-		$('.line_container').css('display','block');
-		 
-	 
-	disableAllElements();
+	
+
 	
 	
-	document.getElementById("container1").style.display = 'block';
-	document.getElementById("container2").style.display = 'block';
-	document.getElementById("container3").style.display = 'block';
-	document.getElementById("container4").style.display = 'block';
-	 
 	$.ajax({
 		type : "POST",
 		url : "/InflowVSOutflow/",
@@ -531,8 +493,16 @@ function Draw_InflowVSOutflow() {
 		},
 
 		success : function(data) {
-			console.log('asdf')
-
+			 
+			disableAllElements();
+			
+			$('.line_container').css('display', 'block');
+			
+			document.getElementById("container1").style.display = 'block';
+			document.getElementById("container2").style.display = 'block';
+			document.getElementById("container3").style.display = 'block';
+			document.getElementById("container4").style.display = 'block';
+			
 			InflowVSOutflow(data.daily_ticket_inflow,
 					data.daily_ticket_outflow, 'Daily ' + 'Incident '
 							+ 'Inflow vs Outflow', 'Incident', 'container1');
@@ -549,25 +519,25 @@ function Draw_InflowVSOutflow() {
 					data.weekly_ticket_outflow, 'Weekly ' + 'SR '
 							+ 'Inflow vs Outflow', 'SR', 'container4');
 
+			
+			
+
+			
 		}
 	})
-} 
+}
 
 function Draw_Incident_VS_SR() {
-	 Highcharts.setOptions({
-	     colors: ['#fa8d3d','#4169E1',	 '#7fd13b', '#ED561B', '#DDDF00', '#24CBE5', '#775f55', '#FF9655', '#FFF263','#6AF9C4']
-	    });
+	Highcharts.setOptions({
+		colors : [ '#fa8d3d', '#4169E1', '#7fd13b', '#ED561B', '#DDDF00',
+				'#24CBE5', '#775f55', '#FF9655', '#FFF263', '#6AF9C4' ]
+	});
 
 	
 	
-	$('.pie_container').css('display','none');
-	$('.line_container').css('display','block');
-	disableAllElements();
-	document.getElementById("container1").style.display = 'block';
-	document.getElementById("container2").style.display = 'block';
-	document.getElementById("container3").style.display = 'block';
-	document.getElementById("container4").style.display = 'block';
-
+	
+	
+	
 	
 
 	$.ajax({
@@ -580,6 +550,14 @@ function Draw_Incident_VS_SR() {
 
 		success : function(data) {
 
+			disableAllElements();
+			document.getElementById("container1").style.display = 'block';
+			document.getElementById("container2").style.display = 'block';
+			document.getElementById("container3").style.display = 'block';
+			document.getElementById("container4").style.display = 'block';
+			$('.line_container').css('display', 'block');
+			
+			
 			Incident_VS_SR(data.daily_ticket_inflow, 'Daily Ticket Inflow',
 					'container1');
 			Incident_VS_SR(data.daily_ticket_outflow, 'Daily Ticket Outflow',

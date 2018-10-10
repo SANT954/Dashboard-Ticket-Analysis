@@ -30,7 +30,9 @@ current_open_aged_30="select count(*) from report where  created < sysdate-30 an
 
 
 
-ticketicket_data_7="Select TICKET,CATEGORY,DISPOSITION,ASSIGNED,trim(BUG_NUMBER),  CONTROL_NUMBER   from report where status not in ('Solved')  and created< sysdate-7 and created > sysdate-30"
+ticketicket_data_30="Select TICKET,CATEGORY, ASSIGNED,trim(BUG_NUMBER),trunc(sysdate-created) as AGE,   CONTROL_NUMBER   from report where status not in ('Solved')  and created< sysdate-30"
+ticketicket_data_7="Select TICKET,CATEGORY,ASSIGNED,trim(BUG_NUMBER),trunc(sysdate-created) as AGE,  CONTROL_NUMBER   from report where status not in ('Solved')  and created< sysdate-7 and created > sysdate-30"
+
 
 def getConnectionCursor():
     
