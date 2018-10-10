@@ -19,12 +19,90 @@ function loadConfirm(){
 	document.getElementById("loader_id").style.display = 'block';
 	$('#loader_id').addClass('loader').removeClass('nothing')
 
+	$('#Sync_Job_Status').html("Data Sync In Progress ")
 	var sync_status=getLatestData(mycallback);
 	$('#loader_id').addClass('loader').removeClass('nothing')
 	
 	
 
 }
+
+
+function pullQuickStats(){
+	
+	disableAllElements()
+	
+	//getTicket_7_Data()
+	$.ajax({
+		type : "POST",
+		url : "/pullQuickStats/",
+		data : {
+
+			pullQuickStats : 'Yes'
+				
+		},
+	    //async: false, 
+
+ 
+		success : function(data) {
+
+			$('#total_open_tickets').html("Count of Open Tickets          :" +data.current_open_count);		 
+			
+			$('#total_open_incidents').html("Count of Open Incidents        :" +data.current_open_incidents);
+			$('#total_open_sr').html("Count of Open Service Requests :" +data.current_open_srs);
+			$('#total_open_auto_incidents').html("Count of Open Auto Incidents   :" +data.current_open_auto_incidents);
+			$('#total_open_manual_incidents').html("Count of Open Manual Incidents :" +data.current_open_manual_incidents);
+			$('#total_open_p1s').html("Count of Open P1 Tickets       :" +data.current_open_p1s);
+			$('#total_aged_7').html("Tickets Aged More Than 7 Days  :" + data.current_open_aged_7);
+			$('#total_aged_30').html("Tickets Aged More Than 30 Days :" +data.current_open_aged_30);
+			
+
+			
+			var	oTable=	$('#table_7').DataTable({
+				data : data.ticketicket_data_7,
+				 paging: true,
+				  pageLength: 5,
+				    bLengthChange: false,
+				    info : false,
+				  //  "scrollY": "200px",
+				   // sPaginationType: "four_button",
+				    searching: true,
+				    autoWidth: false,
+				    destroy: true,
+				   /* $(".dataTables_length select").addClass("selectpicker sel_id"),*/
+
+
+				columns : [ {
+					title : "TICKET"
+				}, {
+					title : "CATEGORY"
+				}, {
+					title : "DISPOSITION"
+				}, {
+					title : "ASSIGNED"
+				}, {
+					title : "BUG NUMBER"
+				}, {
+					title : "CONTROL NUMBER"
+				}]
+			});
+
+			
+		}
+	})
+	 
+	
+
+	
+	
+	
+	document.getElementById("quick_stats_data").style.display = 'block';
+	document.getElementById("table-container_7").style.display = 'block';
+	$('.pie_container').css('display','none');
+	$('.line_container').css('display','none');
+	
+	
+	 }
 
 function clearReports(e) {
 
@@ -172,9 +250,7 @@ function disableAllElements() {
 	document.getElementById("container1").style.display = 'none';
 	document.getElementById("container2").style.display = 'none';
 	document.getElementById("container3").style.display = 'none';
-	document.getElementById("container4").style.display = 'none';
-	document.getElementById("container5").style.display = 'none';
-	document.getElementById("container6").style.display = 'none';
+	document.getElementById("container4").style.display = 'none'; 
 	document.getElementById("pie_container1").style.display = 'none';
 	document.getElementById("pie_container2").style.display = 'none';
 	document.getElementById("pie_container3").style.display = 'none';
@@ -182,10 +258,12 @@ function disableAllElements() {
 	document.getElementById("pie_container5").style.display = 'none';
 	document.getElementById("pie_container6").style.display = 'none';
 	document.getElementById("table-container").style.display = 'none';
-
+	document.getElementById("table-container_7").style.display = 'none';
 	document.getElementById("loader_id").style.display = 'none';
 	document.getElementById("load_confirm").style.display = 'none';
 	$('#Sync_Job_Status').html("")
+	document.getElementById("quick_stats_data").style.display = 'none';
+	
 }
 
 
@@ -193,8 +271,10 @@ function disableAllElements() {
 
 
 function getTicketData() {
-	console.log("asdfasdf");
+	
 	disableAllElements();
+	
+	
 	document.getElementById("table-container").style.display = 'block';
 
 	$.ajax({
@@ -259,6 +339,14 @@ function getTicketData() {
 
 
 
+
+
+
+ 
+
+
+
+
 function onhover(){
 	
 	$("#ticket_table  tbody tr").on('mouseover',function () {
@@ -308,14 +396,10 @@ function pie_data() {
 
 	disableAllElements()
 
-	/*
-	 * document.getElementById("container1").style.display = 'none';
-	 * document.getElementById("container2").style.display = 'none';
-	 * document.getElementById("container3").style.display = 'none';
-	 * document.getElementById("container4").style.display = 'none';
-	 * document.getElementById("container5").style.display = 'none';
-	 * document.getElementById("container6").style.display = 'none';
-	 */
+	$('.line_container').css('display','none');
+	$('.pie_container').css('display','block');
+	
+ 
 	document.getElementById("pie_container1").style.display = 'block';
 	document.getElementById("pie_container2").style.display = 'block';
 	document.getElementById("pie_container3").style.display = 'block';
@@ -334,13 +418,7 @@ function pie_data() {
 
 				success : function(data) {
 
-					/*
-					 * console.log(data["pie_dat"])
-					 * console.log(data.pie_dat['Incident'])
-					 * console.log(data["pie_dat"]['Service Request'])
-					 * console.log(data["pie_dat"]['Incident'])
-					 */
-
+ 
 					incident_sr_count = data.incident_sr_count;
 					ticket_status = data.ticket_status;
 					ticket_source = data.ticket_source;
@@ -396,6 +474,10 @@ function pie_data() {
 						});
 					}
 
+					 Highcharts.setOptions({
+					     colors: ['#fa8d3d','#4169E1',	 '#7fd13b', '#ED561B', '#DDDF00', '#24CBE5', '#775f55', '#FF9655', '#FFF263','#6AF9C4']
+					    });
+					
 					draw_pie(isc, 'pie_container1', "Incident vs SR Count");
 					draw_pie(tstatus, 'pie_container2',
 							"Current Open Tickets By Status");
@@ -423,16 +505,23 @@ function pie_data() {
 
 function Draw_InflowVSOutflow() {
 
+	 Highcharts.setOptions({
+	     colors: ['#fa8d3d','#4169E1',	 '#7fd13b', '#ED561B', '#DDDF00', '#24CBE5', '#775f55', '#FF9655', '#FFF263','#6AF9C4'],
+	     });
+
+	 
+	 $('.pie_container').css('display','none');
+		$('.line_container').css('display','block');
+		 
+	 
 	disableAllElements();
+	
 	
 	document.getElementById("container1").style.display = 'block';
 	document.getElementById("container2").style.display = 'block';
 	document.getElementById("container3").style.display = 'block';
 	document.getElementById("container4").style.display = 'block';
-	/*document.getElementById("container5").style.display = 'none';
-	document.getElementById("container6").style.display = 'none';
-*/
- 
+	 
 	$.ajax({
 		type : "POST",
 		url : "/InflowVSOutflow/",
@@ -462,27 +551,22 @@ function Draw_InflowVSOutflow() {
 
 		}
 	})
-}
-function Disable_elements() {
+} 
 
-	document.getElementById("pie_container1").style.display = 'none';
-	document.getElementById("pie_container2").style.display = 'none';
-	document.getElementById("pie_container3").style.display = 'none';
-	document.getElementById("pie_container4").style.display = 'none';
-	document.getElementById("pie_container5").style.display = 'none';
-	document.getElementById("pie_container6").style.display = 'none';
-
-}
 function Draw_Incident_VS_SR() {
+	 Highcharts.setOptions({
+	     colors: ['#fa8d3d','#4169E1',	 '#7fd13b', '#ED561B', '#DDDF00', '#24CBE5', '#775f55', '#FF9655', '#FFF263','#6AF9C4']
+	    });
 
 	
+	
+	$('.pie_container').css('display','none');
+	$('.line_container').css('display','block');
 	disableAllElements();
-	/*document.getElementById("container1").style.display = 'none';
-	document.getElementById("container2").style.display = 'none';
-	*/document.getElementById("container3").style.display = 'block';
+	document.getElementById("container1").style.display = 'block';
+	document.getElementById("container2").style.display = 'block';
+	document.getElementById("container3").style.display = 'block';
 	document.getElementById("container4").style.display = 'block';
-	document.getElementById("container5").style.display = 'block';
-	document.getElementById("container6").style.display = 'block';
 
 	
 
@@ -497,13 +581,13 @@ function Draw_Incident_VS_SR() {
 		success : function(data) {
 
 			Incident_VS_SR(data.daily_ticket_inflow, 'Daily Ticket Inflow',
-					'container3');
+					'container1');
 			Incident_VS_SR(data.daily_ticket_outflow, 'Daily Ticket Outflow',
-					'container4');
+					'container2');
 			Incident_VS_SR(data.weekly_ticket_inflow, 'Weekly Ticket Inflow',
-					'container5');
+					'container3');
 			Incident_VS_SR(data.weekly_ticket_outflow, 'Weekly Ticket Outflow',
-					'container6');
+					'container4');
 
 		}
 	})

@@ -75,6 +75,45 @@ def POSTForm(request):
        # return render(request, 'index.html', {'script': script,'div':div})
         #return JsonResponse({"script": "script"})
  
+def pullQuickStats(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        if request.POST.get('pullQuickStats') =='Yes':
+            
+            cur.execute(data_layer.current_open_count ) 
+            current_open_count = cur.fetchall()
+            
+            cur.execute(data_layer.current_open_incidents ) 
+            current_open_incidents= cur.fetchall()
+            
+            cur.execute(data_layer.current_open_srs) 
+            current_open_srs= cur.fetchall()
+            
+            cur.execute(data_layer.current_open_auto_incidents) 
+            current_open_auto_incidents = cur.fetchall()
+            
+            cur.execute(data_layer.current_open_manual_incidents) 
+            current_open_manual_incidents= cur.fetchall()
+            
+            cur.execute(data_layer.current_open_p1s) 
+            current_open_p1s= cur.fetchall()
+            
+            cur.execute(data_layer.current_open_aged_7) 
+            current_open_aged_7= cur.fetchall()
+             
+            cur.execute(data_layer.current_open_aged_30) 
+            current_open_aged_30= cur.fetchall()
+            
+            cur.execute(data_layer.ticketicket_data_7) 
+            ticketicket_data_7 = cur.fetchall()
+            
+    
+            return JsonResponse({"current_open_count":current_open_count ,"current_open_incidents":current_open_incidents ,
+                                 "current_open_srs":current_open_srs ,"current_open_auto_incidents":current_open_auto_incidents ,
+                                 "current_open_manual_incidents":current_open_manual_incidents ,"current_open_p1s":current_open_p1s ,
+                                 "current_open_aged_7":current_open_aged_7 ,"current_open_aged_30":current_open_aged_30 ,
+                                 "ticketicket_data_7": ticketicket_data_7})
+
 
 def pullLatestData(request):
     sync_job_status=''
@@ -151,6 +190,21 @@ def getTicketData(request):
             ticketicket_data_report = cur.fetchall()
             
             return JsonResponse({ "daily_ticket_inflow": ticketicket_data_report})
+
+
+
+
+def getTicket_7_Data(request):
+    if request.method == 'POST':
+        if request.POST.get('getTicket_7_Data') =='Yes':
+            
+            cur=con.cursor();
+            cur.execute(data_layer.ticketicket_data_7) 
+            ticketicket_data_7 = cur.fetchall()
+            
+            #con.close()
+            return JsonResponse({ "ticketicket_data_7": ticketicket_data_7})
+
             		
  
 def Ajax_Test(request):

@@ -57,17 +57,24 @@ body {
     border: 3px solid #73AD21;  
 }
 
+
+/*
+green : 6B8E23
+medium stale blue : 7B68EE
+*/
+
+  
 #buttons .button ,#load_confirm .button{
-    background-color: #b3b3b3;
+    background-color: #F5AD5B	;
     /* Green */
     border: none;
     
     padding: 10px;
     text-align: center;
     text-decoration: none;
-    color:white;
+    color:black;
     display: inline-block;
-    font-size: 16px;
+    font-size: 20px;
     margin: 10px; 
     cursor: pointer;
     -webkit-transition-duration: 0.4s;
@@ -76,12 +83,43 @@ body {
 }
 
 
-.button1 {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 
-.button2,#load_confirm .button2 {
+/*
+green : 6B8E23
+medium stale blue : 7B68EE
+*/
+.text_box{
+	background-color: #4169E1	;
+    /* Green */
+    border: none;
+    
+    padding: 10px;
+    max-width:300px;
+    text-decoration: none;
+    color:white;
+    
+    font-size: 16px;
+    margin: 10px; 
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    
+    
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+    }
+.pie_container {
+     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+  
+  	margin-top:4px;
+  margin-bottom:4px    
+  }
+
+.line_container {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin :  5px 5px;
+    padding:2px
 }
 
  
@@ -89,9 +127,15 @@ body {
 margin-top: 5px;    margin-bottom: 5px;
 } */
   
-#ticket_table_length{
-	
-}  
+
+.button1 {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button2,#load_confirm .button2 {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin :  5px 0px
+}
  
  .loader {
   border: 16px solid #f3f3f3;
@@ -112,5 +156,15 @@ margin-top: 5px;    margin-bottom: 5px;
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+ 
+ 
+ .table{
+  margin: 0 auto;
+  width: 100%;
+  clear: both;
+  border-collapse: collapse;
+  table-layout: fixed;  
+  word-wrap:break-word;  
 }
  

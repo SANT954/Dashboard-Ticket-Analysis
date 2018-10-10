@@ -6,19 +6,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	href="/static/dataTables.bootstrap4.min.css">
+
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+	href="/static/jquery.dataTables.min.css">
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+	href="/static/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/static/bootstrap-select.css" />
+<link rel="stylesheet"
+	href="/static/bootstrap-table.min.css">
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<link rel="stylesheet" href="/static/jquery-confirm.min.css">
+
 
 <link rel="stylesheet" type="text/css" href="/static/index.css">
 
+<script type="text/javascript">
+window.onload = function() {
+$(function() {
+	console.log("asdf")
+	pullQuickStats();
+})};
 
+</script>
 
 </head>
 
@@ -38,21 +52,25 @@
  
 		<div id="buttons" class="row">
 
+			<button id="quick_stats"  class="col-lg-2 button button2" type='button' value="Quick Stats"
+				name="quick stats"   onClick="pullQuickStats()">Quick Stats</button>
+
+
 			<button id="ticket_report"  class="col-lg-2 button button2"   type='button' value="Ticket Report"
 				name="Ticket Report" class=""
-				onClick="getTicketData()">Ticket_Report</button>
+				onClick="getTicketData()">All Tickets</button>
 
 			<button id="pie_data" class="col-lg-2 button button2"  type='button' value="pie_data" name="pie_data"
 			 onClick="pie_data()">Summay Charts</button>
 
 			<button id="InflowVSOutflow"  class="col-lg-2 button button2" type='button' value="InflowVSOutflow"
 				name="InflowVSOutflow"  
-				onClick="Draw_InflowVSOutflow()">InflowVSOutflow</button>
+				onClick="Draw_InflowVSOutflow()">Inflow/Outflow</button>
 
 
 			<button id="Incident_VS_SR"  class="col-lg-2 button button2" type='button' value="line_data"
 				name="Incident_VS_SR"  
-				onClick="Draw_Incident_VS_SR()">Incident_VS_SR</button>
+				onClick="Draw_Incident_VS_SR()">Incident/SR</button>
 
 			<button id="fill_Data"  class="col-lg-2 button button2" type='button' value="Fill Data"
 				name="Fill Data"   onClick="loadConfirmSync()">Sync
@@ -71,7 +89,7 @@
 
  </div> 
 
-		<div id="loader_id"  style=" margin: 50px 400px 40px 400px"; class="nothing"></div>
+		<div id="loader_id"  style=" margin: 50px 400px 40px 500px"; class="nothing"></div>
 
 		<div>
 
@@ -80,52 +98,122 @@
 		</div>
 
 		<div class="row">
-			<div class="col-lg-4" id="pie_container1"></div>
+			<div class="col-lg-6 pie_container " id="pie_container1" ></div>
 
-			<div class="col-lg-4" id="pie_container2"></div>
-			<div class="col-lg-4" id="pie_container3"></div>
+			<div class="col-lg-6 pie_container" id="pie_container2"></div>
+			<div class="col-lg-6 pie_container" id="pie_container3"></div>
 
-			<div class="col-lg-4" id="pie_container4"></div>
-			<div class="col-lg-4" id="pie_container5"></div>
+			<div class="col-lg-6 pie_container" id="pie_container4"></div>
+			<div class="col-lg-6 pie_container" id="pie_container5"></div>
 
-			<div class="col-lg-4" id="pie_container6"></div>
-			<div class="col-lg-4" id="pie_container7"></div>
+			<div class="col-lg-6 pie_container" id="pie_container6"></div>
+			<!-- <div class="col-lg-6 button2" id="pie_container7"></div>
 
-			<div class="col-lg-4" id="pie_container8"></div>
+			<div class="col-lg-6 button2" id="pie_container8"></div>
 
-			<div class="col-lg-4" id="pie_container9"></div>
+			<div class="col-lg-6 button2" id="pie_container9"></div>
 
-			<div class="col-lg-4" id="pie_container10"></div>
-			<div class="col-lg-4" id="pie_container11"></div>
+			<div class="col-lg-6 button2" id="pie_container10"></div>
+			<div class="col-lg-6 button2" id="pie_container11"></div>
 
-			<div class="col-lg-4" id="pie_container12"></div>
-
+			<div class="col-lg-6 button2" id="pie_container12"></div>
+ -->
 		</div>
+		<div class="row">
 
-		<div id="container1"
-			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
-		<div id="container2"
-			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
+		<div class="col-lg-10 line_container" id="container1" style="margin :  6px 0px" ></div>
+		<div class="col-lg-10 line_container" id="container2" style="margin :  6px 0px"></div>
 
-		<div id="container3"
-			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
-		<div id="container4"
-			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
+		<div class="col-lg-10 line_container" id="container3" style="margin :  6px 0px"></div>
+		<div class="col-lg-10 line_container" id="container4" style="margin :  6px 0px""></div>
 
+<!-- 
+		<div class="col-lg-10" id="container5"  style="margin : 5px"></div>
+		<div class="col-lg-10" id="container6" style="margin : 5px"></div> -->
 
-		<div id="container5"
-			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
-		<div id="container6"
-			style="min-width: 200px; height: 400px; max-width: 800px; margin: 10px"></div>
-
-
+	</div>
 
 		<div>
 			<p id="showing_for"></p>
 		</div>
 
+ <!-- <div  class ="side" >
+ <img id="side" src="/static/image.png">
  
+		<div id='quick_stats_data' class ="side" >
+			<p class="  text_box" id="total_open_tickets"></p>
+			<p class="  text_box" id="total_open_incidents"></p>
+			<p class="  text_box" id="total_open_sr"></p>
+			<p class="  text_box" id="total_open_auto_incidents"></p>
+			<p class="  text_box" id="total_open_manual_incidents"></p>
+			<p class="  text_box" id="total_open_p1s"></p>
+			<p class="  text_box" id="total_aged_7"></p>
+			<p class="  text_box" id="total_aged_30"></p>
+		</div>
 
+</div>
+ -->
+ 
+ 
+ 
+<!--  <div  class ="side" >
+ <div id="table-container_7">
+
+			<table id="table_7" class="col-lg-6 table table-striped table-bordered" 
+				></table>
+		</div>
+ 
+ 
+		<div id='quick_stats_data' class =" col-lg-5 side" >
+			<p class="  text_box" id="total_open_tickets"></p>
+			<p class="  text_box" id="total_open_incidents"></p>
+			<p class="  text_box" id="total_open_sr"></p>
+			<p class="  text_box" id="total_open_auto_incidents"></p>
+			<p class="  text_box" id="total_open_manual_incidents"></p>
+			<p class="  text_box" id="total_open_p1s"></p>
+			<p class="  text_box" id="total_aged_7"></p>
+			<p class="  text_box" id="total_aged_30"></p>
+		</div>
+
+</div>
+ 
+ 
+ --> 
+ 
+ <div  class ="row" >
+ 		<div id='quick_stats_data' class =" col-lg-4" >
+			<p class="  text_box" id="total_open_tickets"></p>
+			<p class="  text_box" id="total_open_incidents"></p>
+			<p class="  text_box" id="total_open_sr"></p>
+			<p class="  text_box" id="total_open_auto_incidents"></p>
+			<p class="  text_box" id="total_open_manual_incidents"></p>
+			<p class="  text_box" id="total_open_p1s"></p>
+			<p class="  text_box" id="total_aged_7"></p>
+			<p class="  text_box" id="total_aged_30"></p>
+		</div>
+
+
+ <div id="table-container_7" class ="col-lg-8 ">
+
+			<table id="table_7" class="table table-striped table-bordered" 
+				></table>
+		</div>
+</div>
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 		<div id="table-container">
 
 			<table id="ticket_table" class="table table-striped table-bordered" 
@@ -137,33 +225,31 @@
 
 
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	src="/static/jquery.min.js"></script>
 
 
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	src="/static/bootstrap.min.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+	src="/static/bootstrap-select.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+	src="/static/bootstrap-table.min.js"></script>
 <script
-	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	src="/static/jquery.dataTables.min.js"></script>
 <script
-	src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"></script>
-<script
-	src="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"></script>
+	src="/static/dataTables.bootstrap4.min.js"></script>
+	<script
+	src="https://cdn.datatables.net/plug-ins/1.10.16/pagination/four_button.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
+<script src="/static/jquery-confirm.min.js"></script>
+
+
+
+<script src="/static/highcharts.js"></script>
+<script src="/static/exporting.js"></script>
+<script src="/static/highcharts-more.js"></script>
 
 <script type="text/javascript" src="/static/g_chart.js"></script>
-
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script
-	src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
-
 <script type="text/javascript" src="/static/index.js"></script>
 </html>
